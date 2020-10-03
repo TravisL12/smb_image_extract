@@ -17,17 +17,17 @@ function parseCsv(file) {
   const content = fs.readFileSync(file, 'utf8');
   Papa.parse(content, {
     header: true,
-    complete: (data) => {
+    complete: ({ data }) => {
       console.log(data);
     },
   });
 }
 
-// parseCsv('./lineups.csv');
+parseCsv('./lineups.csv');
 parseCsv('./rotations.csv');
 
-// getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
-// getImages('first_players', 0, 0); // gets that first player
+getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
+getImages('first_players', 0, 0); // gets that first player
 
 function getImages(folder, start = 0, end = 20) {
   console.log(`start ${folder}`);
