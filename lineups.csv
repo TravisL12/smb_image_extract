@@ -1,0 +1,181 @@
+id,teamName,firstName,lastName,battingOrder
+326,Beewolves,Handley,Dexterez,1
+211,Beewolves,Billy,LeBoink,2
+208,Beewolves,Buster,Bigs,3
+387,Beewolves,Kobe,Kingman,4
+204,Beewolves,Gina,Torrens,5
+209,Beewolves,Magic,Moore,6
+218,Beewolves,Bertha,Banks,7
+205,Beewolves,Johnson,Swanson,8
+201,Beewolves,Hurley,Bender,9
+91,Blowfish,Nirub,Oowanga,1
+92,Blowfish,Keg,Gutterson,2
+98,Blowfish,Marvin,Steed,3
+87,Blowfish,Jose,Carloco,4
+85,Blowfish,Elvis,Stanley,5
+88,Blowfish,Sting,McGee,6
+84,Blowfish,Shayanne,Hill,7
+89,Blowfish,Rod,Forth,8
+83,Blowfish,Wanda,Dregler,9
+106,Buzzards,Buttons,Bunterson,1
+103,Buzzards,Danno,Yoshida,2
+110,Buzzards,Joseph,Trunk,3
+117,Buzzards,Jacques,"O'Ften",4
+104,Buzzards,Mario,Mustaccio,5
+406,Buzzards,Thurman,Colt,6
+109,Buzzards,Rolf,Borgnar,7
+118,Buzzards,Sloop,Whoopity,8
+114,Buzzards,Meow,Bubbkins,9
+385,Crocodons,Vinnie,Vortex,1
+274,Crocodons,Liane,Drive,2
+267,Crocodons,Andre,Candela,3
+388,Crocodons,Runda,Thurd,4
+278,Crocodons,Terra,Lionerre,5
+264,Crocodons,Gordon,Fruitwell,6
+266,Crocodons,Juanita,Hernandez,7
+270,Crocodons,Norton,Pickle,8
+261,Crocodons,Jovita,Pulo,9
+62,Freebooters,Sturdy,Woodman,1
+63,Freebooters,Stockton,Brickhouse,2
+64,Freebooters,Oakley,Stiffs,3
+70,Freebooters,Gunns,Jackman,4
+66,Freebooters,Patience,Evergreen,5
+77,Freebooters,Walker,Runs,6
+363,Freebooters,Pomp,Duchee,7
+65,Freebooters,Jermaine,Raines,8
+74,Freebooters,Winnie,Noelle,9
+46,Grapplers,Ali,Finderre,1
+360,Grapplers,Devon,Godsendez,2
+369,Grapplers,Kelby,King,3
+49,Grapplers,Joven,Bambino,4
+42,Grapplers,Marco,Demarco,5
+57,Grapplers,Zoom,Delacruz,6
+333,Grapplers,Ian,Fielder,7
+54,Grapplers,Grizz,Senioro,8
+44,Grapplers,Perd,Lovelorn,9
+411,Heaters,Raise,Ruffo,1
+407,Heaters,Slapper,Glute,2
+151,Heaters,Theodore,Stiffner,3
+321,Heaters,Mantonio,Laevo,4
+410,Heaters,Carlton,Starr,5
+408,Heaters,Hank,Hart,6
+409,Heaters,Dion,Bass,7
+405,Heaters,Volt,Bolter,8
+123,Heaters,Elmo,Slayer,9
+188,Herbisaurs,Milo,Stewart,1
+195,Herbisaurs,Morton,Stanberg,2
+191,Herbisaurs,Henry,Hampster,3
+189,Herbisaurs,Grunt,Manly,4
+197,Herbisaurs,Juan,Rojas,5
+381,Herbisaurs,Yoink,Sax,6
+186,Herbisaurs,Annabella,Stokes,7
+185,Herbisaurs,Fiona,Clark,8
+199,Herbisaurs,Gem,Qualita,9
+5,"Hot Corners",Dirk,Sportswood,1
+361,"Hot Corners",Stan,Elyve,2
+370,"Hot Corners",Jeb,Jumps,3
+362,"Hot Corners",Beau,Belter,4
+365,"Hot Corners",Nora,Homes,5
+30,"Hot Corners",Bobby,Bashe,6
+364,"Hot Corners",Tiny,deGrande,7
+102,"Hot Corners",Geronimo,James,8
+206,"Hot Corners",Yolanda,Cooper,9
+308,Jacks,Log,Freely,1
+343,Jacks,Jack,Cracker,2
+349,Jacks,Huffly,Buffler,3
+338,Jacks,Juice,Jackson,4
+342,Jacks,Razi,Dazzler,5
+324,Jacks,Rob,Glover,6
+67,Jacks,Downtown,Upton,7
+345,Jacks,Tuff,Lift,8
+251,Jacks,Donk,Oh,9
+402,Moonstars,Boo,Louis,1
+126,Moonstars,Rusty,Bustum,2
+404,Moonstars,Nance,Tools,3
+131,Moonstars,Herbert,Hackman,4
+130,Moonstars,Gustav,Gustavson,5
+134,Moonstars,Windy,Wheels,6
+127,Moonstars,Lacky,Luster,7
+124,Moonstars,Pepe,Vinicio,8
+121,Moonstars,Alisha,Woodrow,9
+234,Moose,Irene,Fast,1
+224,Moose,Heronimus,Jackson,2
+227,Moose,Perry,Quaker,3
+231,Moose,Rip,Dingers,4
+228,Moose,Fred,Bobbit,5
+230,Moose,Nacho,Crisp,6
+341,Moose,Buck,Swiner,7
+226,Moose,Roman,Rhoades,8
+222,Moose,Rhiannon,Cannon,9
+307,Nemesis,Jackie,Slam,1
+306,Nemesis,Jock,Sports,2
+317,Nemesis,Javier,Hautier,3
+315,Nemesis,Hito,Moonshota,4
+309,Nemesis,Mash,Taters,5
+303,Nemesis,Javy,Yatter,6
+318,Nemesis,Stacy,Staples,7
+302,Nemesis,Brine,Pickleford,8
+311,Nemesis,Ansel,Carouse,9
+167,Overdogs,Kasha,Emyn,1
+164,Overdogs,Guy,Gold,2
+403,Overdogs,Sakda,Song,3
+166,Overdogs,Rhonda,Horne,4
+169,Overdogs,Anton,Goodwood,5
+168,Overdogs,Robbin,Yew,6
+175,Overdogs,Elroy,Action,7
+178,Overdogs,Yvette,Victorino,8
+171,Overdogs,Larry,"La'Joy",9
+257,Platypi,Kitty,Kauffman,1
+254,Platypi,Herra,"O'Wuggliems",2
+246,Platypi,Beefcake,McStevens,3
+248,Platypi,Muffin,Studwick,4
+245,Platypi,Willy,Bacon,5
+242,Platypi,Scooter,Sandbrick,6
+249,Platypi,Charley,Lopez,7
+250,Platypi,Tugboat,Thomas,8
+259,Platypi,Ace,"von Acesson",9
+384,"Sand Cats",Knox,Oxensocksen,1
+50,"Sand Cats",Jess,Fowl,2
+163,"Sand Cats",Marsha,Brown,3
+314,"Sand Cats",Hercules,Bentley,4
+187,"Sand Cats",Dolf,Steak,5
+391,"Sand Cats",Super,Sampson,6
+128,"Sand Cats",Rodney,Park,7
+386,"Sand Cats",Chip,Duffers,8
+39,"Sand Cats",Kerwin,Arches,9
+4,Sawteeth,Slash,Trips,1
+3,Sawteeth,Johnny,Bags,2
+18,Sawteeth,Junior,"Young Sr",3
+9,Sawteeth,Jon,Ronero,4
+358,Sawteeth,Lester,Bronco,5
+8,Sawteeth,Kira,Nutmeg,6
+17,Sawteeth,DP,Turner,7
+7,Sawteeth,Junior,"Young Jr",8
+414,Sawteeth,Fabio,Fabulo,9
+25,Sirloins,Lloyd,Cook,1
+340,Sirloins,Kat,Stanza,2
+26,Sirloins,Hammer,Longballo,3
+28,Sirloins,Filet,Jones,4
+31,Sirloins,Madoka,Hayata,5
+32,Sirloins,Damien,Rush,6
+27,Sirloins,Willard,Wiggins,7
+24,Sirloins,Preston,Addonomus,8
+21,Sirloins,Manny,Kays,9
+282,Wideloads,Masha,Donga,1
+286,Wideloads,Harmony,Straus,2
+298,Wideloads,Chimo,Gaspar,3
+284,Wideloads,Hack,Liner,4
+285,Wideloads,Wade,Hobbes,5
+347,Wideloads,Fungo,Accuro,6
+283,Wideloads,Janus,Friedman,7
+288,Wideloads,Ella,Roids,8
+290,Wideloads,Chugg,Burbony,9
+148,"Wild Pigs",Bloop,Michaels,1
+344,"Wild Pigs",Snag,Roper,2
+158,"Wild Pigs",Flash,Evans,3
+147,"Wild Pigs",Spanky,Wagnerd,4
+150,"Wild Pigs",Rosy,Hardman,5
+146,"Wild Pigs",Mannon,Moon,6
+346,"Wild Pigs",Frank,Battery,7
+156,"Wild Pigs",Roberto,Alba,8
+141,"Wild Pigs",Wes,Yogurt,9

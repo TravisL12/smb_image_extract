@@ -1,6 +1,7 @@
 const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
+const Papa = require('papaparse');
 
 const colGap = 53;
 
@@ -12,8 +13,21 @@ const thirdRow = [410, 1436];
 const width = 331;
 const height = 490;
 
-getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
-getImages('first_players', 0, 0); // gets that first player
+function parseCsv(file) {
+  const content = fs.readFileSync(file, 'utf8');
+  Papa.parse(content, {
+    header: true,
+    complete: (data) => {
+      console.log(data);
+    },
+  });
+}
+
+// parseCsv('./lineups.csv');
+parseCsv('./rotations.csv');
+
+// getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
+// getImages('first_players', 0, 0); // gets that first player
 
 function getImages(folder, start = 0, end = 20) {
   console.log(`start ${folder}`);
@@ -24,7 +38,7 @@ function getImages(folder, start = 0, end = 20) {
       return console.log('Unable to scan directory: ' + err);
     }
 
-    files.forEach(function (file, idx) {
+    files.forEach(function (file) {
       for (let i = start; i <= end; i++) {
         let left, top, itemLeft;
         if (i < 8) {
@@ -40,8 +54,7 @@ function getImages(folder, start = 0, end = 20) {
 
         sharp(`./${folder}/${file}`)
           .extract({ left: itemLeft, top, width, height })
-          .png({ adaptiveFiltering: true })
-          .toFile(`./updated/${idx}-${i}.png`, (err) => {
+          .toFile(`./updated/${file.slice(0, -4)}-${i}.png`, (err) => {
             console.log(err);
           });
       }
