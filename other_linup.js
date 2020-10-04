@@ -1,5 +1,5 @@
-// first 5 are bench
-// last four are pitchers
+// first 5 are bench arr.slice(0,5)
+// last four are pitchers arr.slice(5)
 
 const extras = {
   beewolves: [
@@ -242,3 +242,5 @@ const extras = {
     "Hander O'Speciallo",
   ],
 };
+
+module.exports = { extras };

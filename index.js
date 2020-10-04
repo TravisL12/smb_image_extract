@@ -2,7 +2,8 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
-const { groupBy, snakeCase } = require('lodash');
+const { extras } = require('./other_linup.js');
+const { groupBy, snakeCase, keys } = require('lodash');
 
 const colGap = 53;
 
@@ -31,6 +32,22 @@ const rotations = groupBy(parseCsv('./rotations.csv').data, (o) =>
   snakeCase(o.teamName)
 );
 
+const teams = keys(lineups);
+
+// this is hacky as shit
+const total = teams.reduce((acc, team) => {
+  const first = lineups[team]
+    .slice(0, -1) // chop off starting pitcher
+    .map((player) => `${player.firstName} ${player.lastName}`);
+  const second = extras[team].slice(0, 5);
+  const third = rotations[team].map(
+    (player) => `${player.firstName} ${player.lastName}`
+  );
+  const fourth = extras[team].slice(5);
+  acc[team] = [...first, ...second, ...third, ...fourth];
+  return acc;
+}, {});
+// console.log(total);
 getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
 getImages('first_players', 0, 0); // gets that first player
 
@@ -51,28 +68,22 @@ function getImages(folder, start = 0, end = 20) {
       }
 
       for (let i = start; i <= end; i++) {
-        let playerName = '';
-        let left, top, itemLeft, player;
+        let left, top, itemLeft;
         if (i < 8) {
           [left, top] = firstRow;
           itemLeft = left + (width + colGap) * i;
-          player = lineups[teamName][i];
         } else if (i < 13) {
           [left, top] = secondRow;
           itemLeft = left + (width + colGap) * (i - 8);
         } else {
           [left, top] = thirdRow;
           itemLeft = left + (width + colGap) * (i - 13);
-          player = rotations[teamName][i - 13];
         }
 
-        if (player) {
-          playerName = `-${player.firstName.toLowerCase()}_${player.lastName.toLowerCase()}`;
-        }
-
+        const playerName = total[teamName][i].toLowerCase().replace(/ /gi, '_');
         sharp(`./${folder}/${file}`)
           .extract({ left: itemLeft, top, width, height })
-          .toFile(`./updated/${teamName}-${i}${playerName}.png`, (err) => {
+          .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
             console.log(err);
           });
       }
