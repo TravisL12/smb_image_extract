@@ -1,203 +1,220 @@
-Benny Balmer - Beewolves
-Freddie Knox - Beewolves
-Steve Monstur - Beewolves
-Poke Foster - Beewolves
-Ruby Greene - Beewolves
-Tatts Balfour - Beewolves
-Benson Rushmore - Beewolves
-Dusty Winder - Beewolves
-Smack Avery - Beewolves
+const extras = {{Beewolves:
+['Benny Balmer',
+'Freddie Knox',
+'Steve Monstur',
+'Poke Foster',
+'Ruby Greene',
+'Tatts Balfour',
+'Benson Rushmore',
+'Dusty Winder',
+'Smack Avery']},
 
-Ricky Quan - Blowfish
-Hog Porker - Blowfish
-Harry Backman - Blowfish
-Alfonzo Delgado - Blowfish
-Pumper Lumpkins - Blowfish
-Geoffrey Jenkins - Blowfish
-Joanna Heater - Blowfish
-Mindy Marshwater - Blowfish
-Julio Huper - Blowfish
+{Blowfish:
+['Ricky Quan',
+'Hog Porker',
+'Harry Backman',
+'Alfonzo Delgado',
+'Pumper Lumpkins',
+'Geoffrey Jenkins',
+'Joanna Heater',
+'Mindy Marshwater',
+'Julio Huper']},
 
+{Buzzards:
+['Spits McKinny',
+'Emilio Idoya',
+'Ham Slamous',
+'Helena Bigsby',
+'Billy Bronx',
+'Sebastian Morrow',
+'Max Texis',
+'Meat Commonly',
+'Leyla Buckberger']},
 
-Spits McKinny - Buzzards
-Emilio Idoya - Buzzards
-Ham Slamous - Buzzards
-Helena Bigsby - Buzzards
-Billy Bronx - Buzzards
-Sebastian Morrow - Buzzards
-Max Texis - Buzzards
-Meat Commonly - Buzzards
-Leyla Buckberger - Buzzards
+{Crocodons:
+['Trisha Lee',
+'Evan Chukov',
+'Clifford Kane',
+'Tarzan Woodburn',
+'Bubba Blastman',
+'Woody Ano',
+'Tia Mayfair',
+'Lou DaBaziz',
+'Ricky McFarland']},
 
-Trisha Lee - Crocodons
-Evan Chukov - Crocodons
-Clifford Kane - Crocodons
-Tarzan Woodburn - Crocodons
-Bubba Blastman - Crocodons
-Woody Ano - Crocodons
-Tia Mayfair - Crocodons
-Lou DaBaziz - Crocodons
-Ricky McFarland - Crocodons
+{Freebooters:
+['Kenna Quorn',
+'Kache Baskette',
+'Landon Fare',
+'Rocky Backstop',
+'Badhop Brown',
+'Steamboat Wisselle',
+'Grace Loopinovich',
+'Kay Frequin',
+'Ryder McPride']},
 
-Kenna Quorn - Freebooters
-Kache Baskette - Freebooters
-Landon Fare - Freebooters
-Rocky Backstop - Freebooters
-Badhop Brown - Freebooters
-Steamboat Wisselle - Freebooters
-Grace Loopinovich - Freebooters
-Kay Frequin - Freebooters
-Ryder McPride - Freebooters
+{Grapplers:
+['Eduardo Electro',
+'Ben Kringer',
+'Jefe Manzano',
+'Biff Noggins',
+'Marla Moore',
+'Rallie Overro',
+'Mack Gunn',
+'Tucker Turlington',
+'Meggy Meggles']},
 
-Eduardo Electro - Grapplers
-Ben Kringer - Grapplers
-Jefe Manzano - Grapplers
-Biff Noggins - Grapplers
-Marla Moore - Grapplers
-Rallie Overro - Grapplers
-Mack Gunn - Grapplers
-Tucker Turlington - Grapplers
-Meggy Meggles - Grapplers
+{Heaters:
+['Kimme Smoke',
+'Maggie Rags',
+'Buscha Digman',
+'Bubbles Garcia',
+'Murky Nubswubbles',
+'Derr Neverwocker',
+'Splash Cashmore',
+'Huck Enduck',
+'Simba Delano']},
 
+{Herbisaurs:
+['Stevo Reeves',
+'Ralph Blue',
+'Chilli Little',
+'Nate Hanky',
+'Whopper Batsman',
+'Chuck Filthwick',
+'Leonar Ramiro',
+'Elrick Rippin',
+'Omar Chombo']},
 
-Kimme Smoke - Heaters
-Maggie Rags - Heaters
-Buscha Digman - Heaters
-Bubbles Garcia - Heaters
-Murky Nubswubbles - Heaters
-Derr Neverwocker - Heaters
-Splash Cashmore - Heaters
-Huck Enduck - Heaters
-Simba Delano - Heaters
+{Corners:
+['Seymour Socks',
+'Nori Miyoshi',
+'Stu Berko',
+'Randy Mann',
+'Lars Stadkleef',
+'Joseph Broseph',
+'Amazo Haze',
+'Grump Everbright',
+'Sirloin Jones']},
 
-Stevo Reeves - Herbisaurs
-Ralph Blue - Herbisaurs
-Chilli Little - Herbisaurs
-Nate Hanky - Herbisaurs
-Whopper Batsman - Herbisaurs
-Chuck Filthwick - Herbisaurs
-Leonar Ramiro - Herbisaurs
-Elrick Rippin - Herbisaurs
-Omar Chombo - Herbisaurs
+{Jacks:
+['Yoyo Yamamoto',
+'Batch Wilson',
+'Bruno Adamo',
+'Clutch Cormen',
+'Betty Sparks',
+'Immaculo Spectaculo',
+'Ellain Munstar',
+'Kisha Musharra',
+'Chico Lapada']},
 
-Seymour Socks - Hot Corners
-Nori Miyoshi - Hot Corners
-Stu Berko - Hot Corners
-Randy Mann - Hot Corners
-Lars Stadkleef - Hot Corners
-Joseph Broseph - Hot Corners
-Amazo Haze - Hot Corners
-Grump Everbright - Hot Corners
-Sirloin Jones - Hot Corners
+{Moonstars:
+['Dale Nale',
+'Clubber Buff',
+'Elija Gobbleson',
+'Raffy Slaps',
+'Clyde Oliver',
+'Deft Weddums',
+'Bert Bergerer',
+'Taylor McWhales',
+'Lil Bupton']},
 
+{Moose:
+['Hose Tremendo',
+'Stallion Johnson',
+'Lionel Martinez',
+'Wiggles Freeman',
+'Pedro Nixon',
+'Felix Farmhand',
+'Charlie Best',
+'Carla Tolbert',
+'Klaus D'Gayme']},
 
-Yoyo Yamamoto - Jacks
-Batch Wilson - Jacks
-Bruno Adamo - Jacks
-Clutch Cormen - Jacks
-Betty Sparks - Jacks
-Immaculo Spectaculo - Jacks
-Ellain Munstar - Jacks
-Kisha Musharra - Jacks
-Chico Lapada - Jacks
+{Nemesis:
+['Churl Dangerfield',
+'Flash Leathar',
+'Amy Zoner',
+'Mimori Aoshima',
+'Gabby Ganez',
+'Binky Stevens',
+'Lucy Finnegans',
+'Babette Walkman',
+'Lawrence Wimple']},
 
+{Overdogs:
+['Casper Stern',
+'Samuel Perez',
+'Dick Burger',
+'Raphael Gonzolo',
+'Digg Efforto',
+'Brawn Thunderchump',
+'David Diggler',
+'Rocket Ramon',
+'Doug Nerdwerd']},
 
-Dale Nale - Moonstars
-Clubber Buff - Moonstars
-Elija Gobbleson - Moonstars
-Raffy Slaps - Moonstars
-Clyde Oliver - Moonstars
-Deft Weddums - Moonstars
-Bert Bergerer - Moonstars
-Taylor McWhales - Moonstars
-Lil Bupton - Moonstars
+{Platypi:
+['Linda Hand',
+'Kerry Cartman',
+'Chase Tibuhle',
+'Rory Crowds',
+'Sky Rodriguez',
+'Chance Lotterbury',
+'Remington Sharp',
+'Hugh Jacobs',
+'Walt Huckster']},
 
-Hose Tremendo - Moose
-Stallion Johnson - Moose
-Lionel Martinez - Moose
-Wiggles Freeman - Moose
-Pedro Nixon - Moose
-Felix Farmhand - Moose
-Charlie Best - Moose
-Carla Tolbert - Moose
-Klaus D'Gayme - Moose
+{Cats:
+['Kara Kawaguchi',
+'Winston Draper',
+'Tigg Tantrum',
+'Gia Axelson',
+'Stracy Wickers',
+'Maverick McMann',
+'Gasser Morris',
+'Jemma Yago',
+'Ice Vainer']},
 
-Churl Dangerfield - Nemesis
-Flash Leathar - Nemesis
-Amy Zoner - Nemesis
-Mimori Aoshima - Nemesis
-Gabby Ganez - Nemesis
-Binky Stevens - Nemesis
-Lucy Finnegans - Nemesis
-Babette Walkman - Nemesis
-Lawrence Wimple - Nemesis
+{Sawteeth:
+['Hanso Magikko',
+'Cathy Culdesac',
+'Pex Flext',
+'Mattie Batts',
+'Sammie Shigetani',
+'Brick Towers',
+'Doc Simpleman',
+'Libby Doe',
+'Maximo Primo']},
 
-Casper Stern - Overdogs
-Samuel Perez - Overdogs
-Dick Burger - Overdogs
-Raphael Gonzolo - Overdogs
-Digg Efforto - Overdogs
-Brawn Thunderchump - Overdogs
-David Diggler - Overdogs
-Rocket Ramon - Overdogs
-Doug Nerdwerd - Overdogs
+{Sirloins:
+['Tish Balin',
+'Boomer Plattune',
+'Momo Tobo',
+'Javier Cortez',
+'Mick Steeyle',
+'Shay Dee',
+'Miguel Duke',
+'Linus Digby',
+'Franz Zilla']},
 
-Linda Hand - Platypi
-Kerry Cartman - Platypi
-Chase Tibuhle - Platypi
-Rory Crowds - Platypi
-Sky Rodriguez - Platypi
-Chance Lotterbury - Platypi
-Remington Sharp - Platypi
-Hugh Jacobs - Platypi
-Walt Huckster - Platypi
+{Wideloads:
+['Izzy Baker',
+'Darcy Hicks',
+'Prince Prize',
+'Olaf Beerson',
+'Jules Bergman',
+'Bale Bozzer',
+'Molly Pops',
+'Kyrone Throne',
+'Rogan Balls']},
 
-Kara Kawaguchi - Sand Cats
-Winston Draper - Sand Cats
-Tigg Tantrum - Sand Cats
-Gia Axelson - Sand Cats
-Stracy Wickers - Sand Cats
-Maverick McMann - Sand Cats
-Gasser Morris - Sand Cats
-Jemma Yago - Sand Cats
-Ice Vainer - Sand Cats
-
-Hanso Magikko - Sawteeth
-Cathy Culdesac - Sawteeth
-Pex Flext - Sawteeth
-Mattie Batts - Sawteeth
-Sammie Shigetani - Sawteeth
-Brick Towers - Sawteeth
-Doc Simpleman - Sawteeth
-Libby Doe - Sawteeth
-Maximo Primo - Sawteeth
-
-Tish Balin - Sirloins
-Boomer Plattune - Sirloins
-Momo Tobo - Sirloins
-Javier Cortez - Sirloins
-Mick Steeyle - Sirloins
-Shay Dee - Sirloins
-Miguel Duke - Sirloins
-Linus Digby - Sirloins
-Franz Zilla - Sirloins
-
-Izzy Baker - Wideloads
-Darcy Hicks - Wideloads
-Prince Prize - Wideloads
-Olaf Beerson - Wideloads
-Jules Bergman - Wideloads
-Bale Bozzer - Wideloads
-Molly Pops - Wideloads
-Kyrone Throne - Wideloads
-Rogan Balls - Wideloads
-
-Wally Bacon - Wild Pigs
-Godfried Storm - Wild Pigs
-Enrique Goyo - Wild Pigs
-Turbo Miles - Wild Pigs
-Earnie Blings - Wild Pigs
-Donovan Drake - Wild Pigs
-Alana Lantana - Wild Pigs
-Kendra Kerr - Wild Pigs
-Hander O'Speciallo - Wild Pigs
+{Pigs:
+['Wally Bacon',
+'Godfried Storm',
+'Enrique Goyo',
+'Turbo Miles',
+'Earnie Blings',
+'Donovan Drake',
+'Alana Lantana',
+'Kendra Kerr',
+'Hander O'Speciallo']}
+}
