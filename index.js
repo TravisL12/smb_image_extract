@@ -2,6 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
+const { groupBy, snakeCase } = require('lodash');
 
 const colGap = 53;
 
@@ -15,22 +16,25 @@ const height = 490;
 
 function parseCsv(file) {
   const content = fs.readFileSync(file, 'utf8');
-  Papa.parse(content, {
+  return Papa.parse(content, {
     header: true,
-    complete: ({ data }) => {
-      console.log(data);
-    },
   });
 }
 
-parseCsv('./lineups.csv');
-parseCsv('./rotations.csv');
+// index 0 - 7
+const lineups = groupBy(parseCsv('./lineups.csv').data, (o) =>
+  snakeCase(o.teamName)
+);
+
+// index 13 - 16
+const rotations = groupBy(parseCsv('./rotations.csv').data, (o) =>
+  snakeCase(o.teamName)
+);
 
 getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
 getImages('first_players', 0, 0); // gets that first player
 
 function getImages(folder, start = 0, end = 20) {
-  console.log(`start ${folder}`);
   const directoryPath = path.join(__dirname, `./${folder}`);
 
   fs.readdir(directoryPath, function (err, files) {
@@ -38,26 +42,40 @@ function getImages(folder, start = 0, end = 20) {
       return console.log('Unable to scan directory: ' + err);
     }
 
-    files.forEach(function (file) {
+    for (let idx = 0; idx < files.length; idx++) {
+      const file = files[idx];
+      const teamName = file.slice(0, -4);
+
+      if (file === '.DS_Store') {
+        continue;
+      }
+
       for (let i = start; i <= end; i++) {
-        let left, top, itemLeft;
+        let playerName = '';
+        let left, top, itemLeft, player;
         if (i < 8) {
           [left, top] = firstRow;
           itemLeft = left + (width + colGap) * i;
+          player = lineups[teamName][i];
         } else if (i < 13) {
           [left, top] = secondRow;
           itemLeft = left + (width + colGap) * (i - 8);
         } else {
           [left, top] = thirdRow;
           itemLeft = left + (width + colGap) * (i - 13);
+          player = rotations[teamName][i - 13];
+        }
+
+        if (player) {
+          playerName = `-${player.firstName.toLowerCase()}_${player.lastName.toLowerCase()}`;
         }
 
         sharp(`./${folder}/${file}`)
           .extract({ left: itemLeft, top, width, height })
-          .toFile(`./updated/${file.slice(0, -4)}-${i}.png`, (err) => {
+          .toFile(`./updated/${teamName}-${i}${playerName}.png`, (err) => {
             console.log(err);
           });
       }
-    });
+    }
   });
 }
