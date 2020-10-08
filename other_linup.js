@@ -94,8 +94,8 @@ const extras = {
     'Whopper Batsman',
     'Chuck Filthwick',
     'Leonar Ramiro',
-    'Elrick Rippin',
     'Omar Chombo',
+    'Elrick Rippin',
   ],
 
   hot_corners: [
