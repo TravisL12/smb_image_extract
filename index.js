@@ -5,13 +5,18 @@ const Papa = require('papaparse');
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
 
-// 1080p resolution (1920 x 1080)
+// 1080p resolution (1920 x 1080) NOT WORKING
 // const colGap = 38;
 // const firstRow = [410, 450]; // Left, top
 // const secondRow = [895, 900];
 // const thirdRow = [410, 1345];
 // const width = 285;
 // const height = 420;
+// const first = {
+//   row: [202, 178],
+//   width: 345,
+//   height: 511,
+// };
 
 // 4k resolution (3840 × 2160)
 const colGap = 53;
@@ -25,7 +30,6 @@ const first = {
   row: [405, 356],
   width: 345,
   height: 511,
-  gap: 53,
 };
 
 function parseCsv(file) {
@@ -77,18 +81,17 @@ function getImages(folder, start = 0, end = 20) {
       for (let i = start; i <= end; i++) {
         const imgWidth = i === 0 ? first.width : width;
         const imgHeight = i === 0 ? first.height : height;
-        const imgGap = i === 0 ? first.gap : colGap;
 
         let left, top, itemLeft;
         if (i < 8) {
           [left, top] = i === 0 ? first.row : firstRow;
-          itemLeft = left + (imgWidth + imgGap) * i;
+          itemLeft = left + (imgWidth + colGap) * i;
         } else if (i < 13) {
           [left, top] = secondRow;
-          itemLeft = left + (imgWidth + imgGap) * (i - 8);
+          itemLeft = left + (imgWidth + colGap) * (i - 8);
         } else {
           [left, top] = thirdRow;
-          itemLeft = left + (imgWidth + imgGap) * (i - 13);
+          itemLeft = left + (imgWidth + colGap) * (i - 13);
         }
 
         const playerName = total[teamName][i].toLowerCase().replace(/ /gi, '_');
