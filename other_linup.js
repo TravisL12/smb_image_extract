@@ -1,5 +1,5 @@
 // first 5 are bench arr.slice(0,5)
-// last four are pitchers arr.slice(5)
+// last four are relief pitchers arr.slice(5)
 
 const extras = {
   beewolves: [

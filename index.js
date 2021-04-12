@@ -5,15 +5,28 @@ const Papa = require('papaparse');
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
 
-const colGap = 53;
+// 1080p resolution (1920 x 1080)
+// const colGap = 38;
+// const firstRow = [410, 450]; // Left, top
+// const secondRow = [895, 900];
+// const thirdRow = [410, 1345];
+// const width = 285;
+// const height = 420;
 
-// Left, top
-const firstRow = [410, 368];
+// 4k resolution (3840 × 2160)
+const colGap = 53;
+const firstRow = [410, 368]; // Left, top
 const secondRow = [986, 902];
 const thirdRow = [410, 1436];
-
 const width = 331;
 const height = 490;
+
+const first = {
+  row: [405, 356],
+  width: 345,
+  height: 511,
+  gap: 53,
+};
 
 function parseCsv(file) {
   const content = fs.readFileSync(file, 'utf8');
@@ -47,9 +60,6 @@ const total = teams.reduce((acc, team) => {
   acc[team] = [...first, ...second, ...third, ...fourth];
   return acc;
 }, {});
-// console.log(total);
-getImages('teams', 1); // gets all of the players excpet first player (who is highlighted)
-getImages('first_players', 0, 0); // gets that first player
 
 function getImages(folder, start = 0, end = 20) {
   const directoryPath = path.join(__dirname, `./${folder}`);
@@ -59,34 +69,37 @@ function getImages(folder, start = 0, end = 20) {
       return console.log('Unable to scan directory: ' + err);
     }
 
-    for (let idx = 0; idx < files.length; idx++) {
-      const file = files[idx];
+    const imageFiles = files.filter((el) => path.extname(el) === '.png');
+    for (let idx = 0; idx < imageFiles.length; idx++) {
+      const file = imageFiles[idx];
       const teamName = file.slice(0, -4);
 
-      if (file === '.DS_Store') {
-        continue;
-      }
-
       for (let i = start; i <= end; i++) {
+        const imgWidth = i === 0 ? first.width : width;
+        const imgHeight = i === 0 ? first.height : height;
+        const imgGap = i === 0 ? first.gap : colGap;
+
         let left, top, itemLeft;
         if (i < 8) {
-          [left, top] = firstRow;
-          itemLeft = left + (width + colGap) * i;
+          [left, top] = i === 0 ? first.row : firstRow;
+          itemLeft = left + (imgWidth + imgGap) * i;
         } else if (i < 13) {
           [left, top] = secondRow;
-          itemLeft = left + (width + colGap) * (i - 8);
+          itemLeft = left + (imgWidth + imgGap) * (i - 8);
         } else {
           [left, top] = thirdRow;
-          itemLeft = left + (width + colGap) * (i - 13);
+          itemLeft = left + (imgWidth + imgGap) * (i - 13);
         }
 
         const playerName = total[teamName][i].toLowerCase().replace(/ /gi, '_');
         sharp(`./${folder}/${file}`)
-          .extract({ left: itemLeft, top, width, height })
+          .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
           .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
-            console.log(err);
+            if (err) console.log(err);
           });
       }
     }
   });
 }
+
+getImages('teams');
