@@ -1,3 +1,4 @@
 *.png
 node_modules
+teams*
 .DS_Store

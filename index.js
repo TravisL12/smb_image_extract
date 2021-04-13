@@ -60,6 +60,34 @@ function getSizes(screenWidth, screenHeight) {
   return { colGap, firstRow, secondRow, thirdRow, width, height, first };
 }
 
+function getTeams() {
+  // index 0 - 7
+  const lineups = groupBy(parseCsv('./lineups.csv').data, (o) =>
+    snakeCase(o.teamName)
+  );
+
+  // index 13 - 16
+  const rotations = groupBy(parseCsv('./rotations.csv').data, (o) =>
+    snakeCase(o.teamName)
+  );
+
+  const teams = keys(lineups);
+
+  // this is hacky as shit
+  return teams.reduce((acc, team) => {
+    const first = lineups[team]
+      .slice(0, -1) // chop off starting pitcher
+      .map((player) => `${player.firstName} ${player.lastName}`);
+    const second = extras[team].slice(0, 5);
+    const third = rotations[team].map(
+      (player) => `${player.firstName} ${player.lastName}`
+    );
+    const fourth = extras[team].slice(5);
+    acc[team] = [...first, ...second, ...third, ...fourth];
+    return acc;
+  }, {});
+}
+
 function start(dimension) {
   if (!dimension) return;
   const { screenWidth, screenHeight, inputFolder } = DIMENSIONS[dimension];
@@ -74,31 +102,7 @@ function start(dimension) {
     first,
   } = getSizes(screenWidth, screenHeight);
 
-  // index 0 - 7
-  const lineups = groupBy(parseCsv('./lineups.csv').data, (o) =>
-    snakeCase(o.teamName)
-  );
-
-  // index 13 - 16
-  const rotations = groupBy(parseCsv('./rotations.csv').data, (o) =>
-    snakeCase(o.teamName)
-  );
-
-  const teams = keys(lineups);
-
-  // this is hacky as shit
-  const total = teams.reduce((acc, team) => {
-    const first = lineups[team]
-      .slice(0, -1) // chop off starting pitcher
-      .map((player) => `${player.firstName} ${player.lastName}`);
-    const second = extras[team].slice(0, 5);
-    const third = rotations[team].map(
-      (player) => `${player.firstName} ${player.lastName}`
-    );
-    const fourth = extras[team].slice(5);
-    acc[team] = [...first, ...second, ...third, ...fourth];
-    return acc;
-  }, {});
+  const teams = getTeams();
 
   const directoryPath = path.join(__dirname, `./${inputFolder}`);
 
@@ -108,12 +112,15 @@ function start(dimension) {
     }
 
     const imageFiles = files.filter((el) =>
-      ['.png', 'jpg', 'JPEG'].includes(path.extname(el))
+      ['.png', '.jpg', '.JPEG'].includes(path.extname(el))
     );
+
+    // loop through team images
     for (let idx = 0; idx < imageFiles.length; idx++) {
       const file = imageFiles[idx];
       const teamName = file.slice(0, -4);
 
+      // loop player count
       for (let i = 0; i <= 20; i++) {
         const imgWidth = i === 0 ? first.width : width;
         const imgHeight = i === 0 ? first.height : height;
@@ -130,7 +137,7 @@ function start(dimension) {
           itemLeft = left + (imgWidth + colGap) * (i - 13);
         }
 
-        const playerName = total[teamName][i].toLowerCase().replace(/ /gi, '_');
+        const playerName = teams[teamName][i].toLowerCase().replace(/ /gi, '_');
         sharp(`./${inputFolder}/${file}`)
           .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
           .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
@@ -141,4 +148,4 @@ function start(dimension) {
   });
 }
 
-start('high');
+start('low');
