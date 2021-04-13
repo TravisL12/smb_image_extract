@@ -5,32 +5,43 @@ const Papa = require('papaparse');
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
 
-// 1080p resolution (1920 x 1080) NOT WORKING
-// const colGap = 38;
-// const firstRow = [410, 450]; // Left, top
-// const secondRow = [895, 900];
-// const thirdRow = [410, 1345];
-// const width = 285;
-// const height = 420;
-// const first = {
-//   row: [202, 178],
-//   width: 345,
-//   height: 511,
-// };
+function round(num) {
+  return Math.round(num);
+}
+
+// 1080p resolution (1920 x 1080)
+// const screenWidth = 1920;
+// const screenHeight = 1080;
+// const inputFolder = 'teams_1080';
 
 // 4k resolution (3840 × 2160)
-const colGap = 53;
-const firstRow = [410, 368]; // Left, top
-const secondRow = [986, 902];
-const thirdRow = [410, 1436];
-const width = 331;
-const height = 490;
+const screenWidth = 3840;
+const screenHeight = 2160;
+const inputFolder = 'teams';
+
+const colGap = Math.floor((53 / 3840) * screenWidth);
+const firstRow = [
+  round((410 / 3840) * screenWidth),
+  round((368 / 2160) * screenHeight),
+]; // Left, top
+const secondRow = [
+  round((986 / 3840) * screenWidth),
+  round((902 / 2160) * screenHeight),
+];
+const thirdRow = [
+  round((410 / 3840) * screenWidth),
+  round((1436 / 2160) * screenHeight),
+];
+const width = round((331 / 3840) * screenWidth);
+const height = round((490 / 2160) * screenHeight);
 
 const first = {
-  row: [405, 356],
-  width: 345,
-  height: 511,
+  row: [round((405 / 3840) * screenWidth), round((356 / 2160) * screenHeight)],
+  width: round((345 / 3840) * screenWidth),
+  height: round((511 / 2160) * screenHeight),
 };
+
+getImages(inputFolder);
 
 function parseCsv(file) {
   const content = fs.readFileSync(file, 'utf8');
@@ -104,5 +115,3 @@ function getImages(folder, start = 0, end = 20) {
     }
   });
 }
-
-getImages('teams');
