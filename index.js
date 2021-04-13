@@ -84,7 +84,9 @@ function getImages(folder, start = 0, end = 20) {
       return console.log('Unable to scan directory: ' + err);
     }
 
-    const imageFiles = files.filter((el) => path.extname(el) === '.png');
+    const imageFiles = files.filter((el) =>
+      ['.png', 'jpg', 'JPEG'].includes(path.extname(el))
+    );
     for (let idx = 0; idx < imageFiles.length; idx++) {
       const file = imageFiles[idx];
       const teamName = file.slice(0, -4);
