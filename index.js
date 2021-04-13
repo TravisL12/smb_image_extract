@@ -5,6 +5,8 @@ const Papa = require('papaparse');
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
 
+const VALID_IMG_TYPES = ['.png', '.jpg', '.JPEG'];
+
 function round(num) {
   return Math.round(num);
 }
@@ -15,21 +17,6 @@ function parseCsv(file) {
     header: true,
   });
 }
-
-const DIMENSIONS = {
-  // 1080p resolution (1920 x 1080)
-  low: {
-    screenWidth: 1920,
-    screenHeight: 1080,
-    inputFolder: 'teams_1080',
-  },
-  // 4k resolution (3840 × 2160)
-  high: {
-    screenWidth: 3840,
-    screenHeight: 2160,
-    inputFolder: 'teams',
-  },
-};
 
 function getSizes(screenWidth, screenHeight) {
   const colGap = Math.floor((53 / 3840) * screenWidth);
@@ -88,36 +75,38 @@ function getTeams() {
   }, {});
 }
 
-function start(dimension) {
-  if (!dimension) return;
-  const { screenWidth, screenHeight, inputFolder } = DIMENSIONS[dimension];
-
-  const {
-    colGap,
-    firstRow,
-    secondRow,
-    thirdRow,
-    width,
-    height,
-    first,
-  } = getSizes(screenWidth, screenHeight);
+function start(inputFolder) {
+  if (!inputFolder) {
+    console.error(`No image directory entered`);
+    return;
+  }
 
   const teams = getTeams();
-
   const directoryPath = path.join(__dirname, `./${inputFolder}`);
 
-  fs.readdir(directoryPath, function (err, files) {
+  fs.readdir(directoryPath, async (err, files) => {
     if (err) {
       return console.log('Unable to scan directory: ' + err);
     }
 
     const imageFiles = files.filter((el) =>
-      ['.png', '.jpg', '.JPEG'].includes(path.extname(el))
+      VALID_IMG_TYPES.includes(path.extname(el))
     );
 
     // loop through team images
     for (let idx = 0; idx < imageFiles.length; idx++) {
       const file = imageFiles[idx];
+      const fileMetadata = await sharp(`./${inputFolder}/${file}`).metadata();
+      const {
+        colGap,
+        firstRow,
+        secondRow,
+        thirdRow,
+        width,
+        height,
+        first,
+      } = getSizes(+fileMetadata.width, +fileMetadata.height);
+
       const teamName = file.slice(0, -4);
 
       // loop player count
@@ -148,4 +137,4 @@ function start(dimension) {
   });
 }
 
-start('low');
+start(process.argv[2]);
