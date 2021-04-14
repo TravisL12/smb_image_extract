@@ -6,18 +6,19 @@
     <title>Super Mega Baseball Images!</title>
   </head>
   <body>
-    <h1>Welcome</h1>
+    <h1>Welcome Super Mega Baseball Images!</h1>
     <ul>
-      <li>make form to upload image</li>
+      <li style="text-decoration: line-through">make form to upload image</li>
       <li>progress indicator for images</li>
       <li>pass images back</li>
-      <li></li>
-      <li></li>
     </ul>
-    <form method="post" enctype="multipart/form-data" action="/upload">
-      <input type="file" name="file" />
-      <input type="submit" value="Submit" />
-    </form>
+
+    <div>
+      <form id="image-form">
+        <input type="file" name="file" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   </body>
   <script src="public/scripts/application.js"></script>
 </html>

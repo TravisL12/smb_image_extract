@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const { parseImages } = require('./imageParse.js');
@@ -27,7 +28,10 @@ app.post(
   upload.single('file' /* name attribute of <file> element in your form */),
   (req, res) => {
     const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, './uploads/image.png');
+    const targetPath = path.join(
+      __dirname,
+      `./uploads/${req.file.originalname}`
+    );
 
     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
       fs.rename(tempPath, targetPath, (err) => {
