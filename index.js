@@ -2,6 +2,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
+
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
 
@@ -75,7 +76,7 @@ function getTeams() {
   }, {});
 }
 
-function start(inputFolder) {
+module.exports.start = (inputFolder) => {
   if (!inputFolder) {
     console.error(`No image directory entered`);
     return;
@@ -135,6 +136,4 @@ function start(inputFolder) {
       }
     }
   });
-}
-
-start(process.argv[2]);
+};
