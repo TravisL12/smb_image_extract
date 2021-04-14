@@ -76,7 +76,7 @@ function getTeams() {
   }, {});
 }
 
-module.exports.start = (inputFolder) => {
+const parseImages = (inputFolder) => {
   if (!inputFolder) {
     console.error(`No image directory entered`);
     return;
@@ -136,4 +136,8 @@ module.exports.start = (inputFolder) => {
       }
     }
   });
+};
+
+module.exports = {
+  parseImages,
 };
