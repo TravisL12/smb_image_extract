@@ -76,13 +76,54 @@ function getTeams() {
   }, {});
 }
 
+const teams = getTeams();
+const makeCards = async (file) => {
+  const fileMetadata = await sharp(`./uploads/${file.originalname}`).metadata();
+  const {
+    colGap,
+    firstRow,
+    secondRow,
+    thirdRow,
+    width,
+    height,
+    first,
+  } = getSizes(+fileMetadata.width, +fileMetadata.height);
+
+  const teamName = file.originalname.slice(0, -4);
+
+  // loop player count
+  for (let i = 0; i <= 20; i++) {
+    const imgWidth = i === 0 ? first.width : width;
+    const imgHeight = i === 0 ? first.height : height;
+
+    let left, top, itemLeft;
+    if (i < 8) {
+      [left, top] = i === 0 ? first.row : firstRow;
+      itemLeft = left + (imgWidth + colGap) * i;
+    } else if (i < 13) {
+      [left, top] = secondRow;
+      itemLeft = left + (imgWidth + colGap) * (i - 8);
+    } else {
+      [left, top] = thirdRow;
+      itemLeft = left + (imgWidth + colGap) * (i - 13);
+    }
+
+    const playerName = teams[teamName]
+      ? teams[teamName][i].toLowerCase().replace(/ /gi, '_')
+      : `player-${i}`;
+    sharp(`./uploads/${file.originalname}`)
+      .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
+      .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
+        if (err) console.log(err);
+      });
+  }
+};
+
 const parseImages = (inputFolder) => {
   if (!inputFolder) {
     console.error(`No image directory entered`);
     return;
   }
-
-  const teams = getTeams();
   const directoryPath = path.join(__dirname, `./${inputFolder}`);
 
   fs.readdir(directoryPath, async (err, files) => {
@@ -96,48 +137,12 @@ const parseImages = (inputFolder) => {
 
     // loop through team images
     for (let idx = 0; idx < imageFiles.length; idx++) {
-      const file = imageFiles[idx];
-      const fileMetadata = await sharp(`./${inputFolder}/${file}`).metadata();
-      const {
-        colGap,
-        firstRow,
-        secondRow,
-        thirdRow,
-        width,
-        height,
-        first,
-      } = getSizes(+fileMetadata.width, +fileMetadata.height);
-
-      const teamName = file.slice(0, -4);
-
-      // loop player count
-      for (let i = 0; i <= 20; i++) {
-        const imgWidth = i === 0 ? first.width : width;
-        const imgHeight = i === 0 ? first.height : height;
-
-        let left, top, itemLeft;
-        if (i < 8) {
-          [left, top] = i === 0 ? first.row : firstRow;
-          itemLeft = left + (imgWidth + colGap) * i;
-        } else if (i < 13) {
-          [left, top] = secondRow;
-          itemLeft = left + (imgWidth + colGap) * (i - 8);
-        } else {
-          [left, top] = thirdRow;
-          itemLeft = left + (imgWidth + colGap) * (i - 13);
-        }
-
-        const playerName = teams[teamName][i].toLowerCase().replace(/ /gi, '_');
-        sharp(`./${inputFolder}/${file}`)
-          .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
-          .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
-            if (err) console.log(err);
-          });
-      }
+      await makeCards(imageFiles[idx]);
     }
   });
 };
 
 module.exports = {
+  makeCards,
   parseImages,
 };

@@ -2,7 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-const { parseImages } = require('./imageParse.js');
+const { makeCards } = require('./imageParse.js');
 const app = express();
 
 const port = 8080;
@@ -34,6 +34,7 @@ app.post(
     );
 
     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
+      makeCards(req.file);
       fs.rename(tempPath, targetPath, (err) => {
         if (err) return handleError(err, res);
 
