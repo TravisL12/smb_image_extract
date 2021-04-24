@@ -37,7 +37,9 @@ app.post(
         if (err) return handleError(err, res);
         await makeCards(req.file);
         fs.readdir(path.join(__dirname, `./slice_uploads`), {}, (_, files) => {
-          const urls = files.map((file) => file);
+          const urls = files.filter(
+            (file) => path.extname(file).toLowerCase() === '.png'
+          );
           res.send(urls);
         });
       });

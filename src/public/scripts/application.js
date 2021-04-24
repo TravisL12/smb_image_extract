@@ -15,7 +15,9 @@ const submitImage = async () => {
   imgGrid.innerHTML = fileUrls
     .map(
       (url) => `
+      <div class='player-image'>
     <img src="${url}" />
+    </div>
   `
     )
     .join('');
