@@ -92,31 +92,36 @@ const makeCards = async (file) => {
   const teamName = file.originalname.slice(0, -4);
 
   // loop player count
-  for (let i = 0; i <= 20; i++) {
-    const imgWidth = i === 0 ? first.width : width;
-    const imgHeight = i === 0 ? first.height : height;
+  return new Promise((resolve) => {
+    for (let i = 0; i <= 20; i++) {
+      const imgWidth = i === 0 ? first.width : width;
+      const imgHeight = i === 0 ? first.height : height;
 
-    let left, top, itemLeft;
-    if (i < 8) {
-      [left, top] = i === 0 ? first.row : firstRow;
-      itemLeft = left + (imgWidth + colGap) * i;
-    } else if (i < 13) {
-      [left, top] = secondRow;
-      itemLeft = left + (imgWidth + colGap) * (i - 8);
-    } else {
-      [left, top] = thirdRow;
-      itemLeft = left + (imgWidth + colGap) * (i - 13);
+      let left, top, itemLeft;
+      if (i < 8) {
+        [left, top] = i === 0 ? first.row : firstRow;
+        itemLeft = left + (imgWidth + colGap) * i;
+      } else if (i < 13) {
+        [left, top] = secondRow;
+        itemLeft = left + (imgWidth + colGap) * (i - 8);
+      } else {
+        [left, top] = thirdRow;
+        itemLeft = left + (imgWidth + colGap) * (i - 13);
+      }
+
+      const playerName = teams[teamName]
+        ? teams[teamName][i].toLowerCase().replace(/ /gi, '_')
+        : `player-${i}`;
+
+      sharp(`./uploads/${file.originalname}`)
+        .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
+        .toFile(`./slice_uploads/${teamName}-${playerName}.png`, (err) => {
+          if (err) console.log(err);
+        });
     }
 
-    const playerName = teams[teamName]
-      ? teams[teamName][i].toLowerCase().replace(/ /gi, '_')
-      : `player-${i}`;
-    sharp(`./uploads/${file.originalname}`)
-      .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
-      .toFile(`./updated/${teamName}-${playerName}.png`, (err) => {
-        if (err) console.log(err);
-      });
-  }
+    resolve();
+  });
 };
 
 const parseImages = (inputFolder) => {

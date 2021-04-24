@@ -1,4 +1,5 @@
 const imgForm = document.getElementById('image-form');
+const imgGrid = document.querySelector('.image-grid');
 let files;
 
 const submitImage = async () => {
@@ -6,10 +7,18 @@ const submitImage = async () => {
 
   formData.append('file', files);
 
-  await fetch('/upload', {
+  const resp = await fetch('/upload', {
     method: 'POST',
     body: formData,
   });
+  const fileUrls = await resp.json();
+  imgGrid.innerHTML = fileUrls
+    .map(
+      (url) => `
+    <img src="${url}" />
+  `
+    )
+    .join('');
 };
 
 imgForm.file.addEventListener('change', (event) => {

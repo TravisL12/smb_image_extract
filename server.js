@@ -32,13 +32,14 @@ app.post(
       __dirname,
       `./uploads/${req.file.originalname}`
     );
-
     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
-      makeCards(req.file);
-      fs.rename(tempPath, targetPath, (err) => {
+      fs.rename(tempPath, targetPath, async (err) => {
         if (err) return handleError(err, res);
-
-        res.status(200).contentType('text/plain').end('File uploaded!');
+        await makeCards(req.file);
+        fs.readdir(path.join(__dirname, `./slice_uploads`), {}, (_, files) => {
+          const urls = files.map((file) => file);
+          res.send(urls);
+        });
       });
     } else {
       fs.unlink(tempPath, (err) => {
@@ -53,6 +54,7 @@ app.post(
   }
 );
 
+app.use(express.static(path.join(__dirname, 'slice_uploads')));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
