@@ -5,6 +5,7 @@ const Papa = require('papaparse');
 
 const { extras } = require('./other_linup.js');
 const { groupBy, snakeCase, keys } = require('lodash');
+const { DIRECTORIES } = require('./constants.js');
 
 const VALID_IMG_TYPES = ['.png', '.jpg', '.JPEG'];
 
@@ -78,7 +79,9 @@ function getTeams() {
 
 const teams = getTeams();
 const makeCards = async (file) => {
-  const fileMetadata = await sharp(`./uploads/${file.originalname}`).metadata();
+  const fileMetadata = await sharp(
+    path.join(__dirname, DIRECTORIES.uploads, file.originalname)
+  ).metadata();
   const {
     colGap,
     firstRow,
@@ -113,11 +116,18 @@ const makeCards = async (file) => {
         ? teams[teamName][i].toLowerCase().replace(/ /gi, '_')
         : `player-${i}`;
 
-      sharp(`./uploads/${file.originalname}`)
+      sharp(path.join(__dirname, DIRECTORIES.uploads, file.originalname))
         .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
-        .toFile(`./slice_uploads/${teamName}-${playerName}.png`, (err) => {
-          if (err) console.log(err);
-        });
+        .toFile(
+          path.join(
+            __dirname,
+            DIRECTORIES.results,
+            `${teamName}-${playerName}.png`
+          ),
+          (err) => {
+            if (err) console.log(err);
+          }
+        );
     }
 
     resolve();
@@ -129,7 +139,7 @@ const parseImages = (inputFolder) => {
     console.error(`No image directory entered`);
     return;
   }
-  const directoryPath = path.join(__dirname, `./${inputFolder}`);
+  const directoryPath = path.join(__dirname, inputFolder);
 
   fs.readdir(directoryPath, async (err, files) => {
     if (err) {

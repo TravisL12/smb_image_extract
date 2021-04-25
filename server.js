@@ -3,13 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const { makeCards } = require('./imageParse.js');
+const { DIRECTORIES } = require('./constants.js');
 const app = express();
 
 const port = 8080;
-app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.static(path.join(__dirname, DIRECTORIES.src)));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+  res.sendFile(path.join(__dirname, DIRECTORIES.src, 'index.html'));
 });
 
 app.get('/parse', (req, res) => {
@@ -20,7 +21,7 @@ app.get('/parse', (req, res) => {
 //stackoverflow.com/questions/15772394/how-to-upload-display-and-save-images-using-node-js-and-express
 // you might also want to set some limits: https://github.com/expressjs/multer#limits
 const upload = multer({
-  dest: './uploads',
+  dest: path.join(__dirname, DIRECTORIES.uploads),
 });
 
 app.post(
@@ -30,18 +31,23 @@ app.post(
     const tempPath = req.file.path;
     const targetPath = path.join(
       __dirname,
-      `./uploads/${req.file.originalname}`
+      DIRECTORIES.uploads,
+      req.file.originalname
     );
     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
       fs.rename(tempPath, targetPath, async (err) => {
         if (err) return handleError(err, res);
         await makeCards(req.file);
-        fs.readdir(path.join(__dirname, `./slice_uploads`), {}, (_, files) => {
-          const urls = files.filter(
-            (file) => path.extname(file).toLowerCase() === '.png'
-          );
-          res.send(urls);
-        });
+        fs.readdir(
+          path.join(__dirname, DIRECTORIES.results),
+          {},
+          (_, files) => {
+            const urls = files.filter(
+              (file) => path.extname(file).toLowerCase() === '.png'
+            );
+            res.send(urls);
+          }
+        );
       });
     } else {
       fs.unlink(tempPath, (err) => {
@@ -56,7 +62,7 @@ app.post(
   }
 );
 
-app.use(express.static(path.join(__dirname, 'slice_uploads')));
+app.use(express.static(path.join(__dirname, DIRECTORIES.results)));
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
