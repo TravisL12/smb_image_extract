@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
+.container {
+  padding: 20px;
+}
+
 .image-grid {
   display: grid;
   grid-template-columns: repeat(7, 200px);
