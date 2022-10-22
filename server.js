@@ -1,21 +1,21 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const multer = require('multer');
-const { makeCards } = require('./imageParse.js');
-const { DIRECTORIES } = require('./constants.js');
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
+const { makeCards } = require("./imageParse.js");
+const { DIRECTORIES } = require("./constants.js");
 const app = express();
 
 const port = 8080;
 app.use(express.static(path.join(__dirname, DIRECTORIES.src)));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, DIRECTORIES.src, 'index.html'));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, DIRECTORIES.src, "index.html"));
 });
 
-app.get('/parse', (req, res) => {
+app.get("/parse", (req, res) => {
   parseImages(req.query.folder);
-  res.send({ name: 'travis' });
+  res.send({ name: "travis" });
 });
 
 //stackoverflow.com/questions/15772394/how-to-upload-display-and-save-images-using-node-js-and-express
@@ -25,8 +25,8 @@ const upload = multer({
 });
 
 app.post(
-  '/upload',
-  upload.single('file' /* name attribute of <file> element in your form */),
+  "/upload",
+  upload.single("file" /* name attribute of <file> element in your form */),
   (req, res) => {
     const tempPath = req.file.path;
     const targetPath = path.join(
@@ -34,7 +34,7 @@ app.post(
       DIRECTORIES.uploads,
       req.file.originalname
     );
-    if (path.extname(req.file.originalname).toLowerCase() === '.png') {
+    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
       fs.rename(tempPath, targetPath, async (err) => {
         if (err) return handleError(err, res);
         await makeCards(req.file);
@@ -42,10 +42,12 @@ app.post(
           path.join(__dirname, DIRECTORIES.results),
           {},
           (_, files) => {
-            const urls = files.filter(
-              (file) => path.extname(file).toLowerCase() === '.png'
-            );
-            res.send(urls);
+            console.log(path.join(__dirname, DIRECTORIES.results, files[1]));
+            res.sendFile(path.join(__dirname, DIRECTORIES.results, files[1]));
+            // const urls = files.filter(
+            //   (file) => path.extname(file).toLowerCase() === '.png'
+            // );
+            // res.send(urls);
           }
         );
       });
@@ -55,8 +57,8 @@ app.post(
 
         res
           .status(403)
-          .contentType('text/plain')
-          .end('Only .png files are allowed!');
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
       });
     }
   }
