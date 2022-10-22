@@ -34,16 +34,32 @@ app.post(
       DIRECTORIES.uploads,
       req.file.originalname
     );
-    fs.rename(tempPath, targetPath, async (err) => {
-      if (err) return handleError(err, res);
-      await makeCards(req.file);
-      fs.readdir(path.join(__dirname, DIRECTORIES.results), {}, (_, files) => {
-        const urls = files.filter(
-          (file) => path.extname(file).toLowerCase() === ".png"
-        );
-        res.send(urls);
+    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+      const tmpDir = path.join(__dirname, "smb-app");
+      fs.mkdirSync(tmpDir);
+
+      app.use(express.static(tmpDir));
+
+      fs.rename(tempPath, targetPath, async (err) => {
+        if (err) return handleError(err, res);
+        await makeCards(req.file, tmpDir);
+        fs.readdir(path.join(tmpDir), {}, (_, files) => {
+          const urls = files.filter(
+            (file) => path.extname(file).toLowerCase() === ".png"
+          );
+          res.send(urls);
+        });
       });
-    });
+    } else {
+      fs.unlink(tempPath, (err) => {
+        if (err) return handleError(err, res);
+
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
   }
 );
 

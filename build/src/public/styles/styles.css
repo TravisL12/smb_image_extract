@@ -1,0 +1,25 @@
+body {
+  font-family: Helvetica;
+  margin: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 200px);
+  grid-auto-rows: auto;
+  justify-content: space-around;
+  row-gap: 20px;
+}
+
+.uploadContainer {
+  width: 400px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
