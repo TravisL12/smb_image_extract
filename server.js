@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const { makeCards } = require("./imageParse.js");
-const { DIRECTORIES } = require("./constants.js");
+const { DIRECTORIES, RM_DIR_DELAY } = require("./constants.js");
 const app = express();
 
 const port = 8080;
@@ -49,6 +49,14 @@ app.post(
           );
           res.send(urls);
         });
+        setTimeout(() => {
+          fs.rm(tmpDir, { recursive: true }, (err) => {
+            if (err) {
+              throw err;
+            }
+            console.log(`${tmpDir} is deleted!`);
+          });
+        }, RM_DIR_DELAY);
       });
     } else {
       fs.unlink(tempPath, (err) => {
