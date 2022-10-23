@@ -8,7 +8,7 @@ const submitImage = async () => {
 
   formData.append("file", files);
 
-  const resp = await fetch("/upload", {
+  const resp = await fetch("upload", {
     method: "POST",
     body: formData,
   });

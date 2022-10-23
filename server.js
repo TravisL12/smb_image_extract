@@ -28,45 +28,49 @@ app.post(
   "/upload",
   upload.single("file" /* name attribute of <file> element in your form */),
   (req, res) => {
-    const tempPath = req.file.path;
-    const targetPath = path.join(
-      __dirname,
-      DIRECTORIES.uploads,
-      req.file.originalname
-    );
-    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-      const tmpDir = path.join(__dirname, "smb-app");
-      fs.mkdirSync(tmpDir);
+    try {
+      const tempPath = req.file.path;
+      const targetPath = path.join(
+        __dirname,
+        DIRECTORIES.uploads,
+        req.file.originalname
+      );
+      if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+        const tmpDir = path.join(__dirname, "smb-app");
+        fs.mkdirSync(tmpDir);
 
-      app.use(express.static(tmpDir));
+        app.use(express.static(tmpDir));
 
-      fs.rename(tempPath, targetPath, async (err) => {
-        if (err) return handleError(err, res);
-        await makeCards(req.file, tmpDir);
-        fs.readdir(path.join(tmpDir), {}, (_, files) => {
-          const urls = files.filter(
-            (file) => path.extname(file).toLowerCase() === ".png"
-          );
-          res.send(urls);
-        });
-        setTimeout(() => {
-          fs.rm(tmpDir, { recursive: true }, (err) => {
-            if (err) {
-              throw err;
-            }
-            console.log(`${tmpDir} is deleted!`);
+        fs.rename(tempPath, targetPath, async (err) => {
+          if (err) return handleError(err, res);
+          await makeCards(req.file, tmpDir);
+          fs.readdir(path.join(tmpDir), {}, (_, files) => {
+            const urls = files.filter(
+              (file) => path.extname(file).toLowerCase() === ".png"
+            );
+            res.send(urls);
           });
-        }, RM_DIR_DELAY);
-      });
-    } else {
-      fs.unlink(tempPath, (err) => {
-        if (err) return handleError(err, res);
+          setTimeout(() => {
+            fs.rm(tmpDir, { recursive: true }, (err) => {
+              if (err) {
+                throw err;
+              }
+              console.log(`${tmpDir} is deleted!`);
+            });
+          }, RM_DIR_DELAY);
+        });
+      } else {
+        fs.unlink(tempPath, (err) => {
+          if (err) return handleError(err, res);
 
-        res
-          .status(403)
-          .contentType("text/plain")
-          .end("Only .png files are allowed!");
-      });
+          res
+            .status(403)
+            .contentType("text/plain")
+            .end("Only .png files are allowed!");
+        });
+      }
+    } catch (err) {
+      res.status(500).end(err);
     }
   }
 );
