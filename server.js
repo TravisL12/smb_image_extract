@@ -24,6 +24,15 @@ const upload = multer({
   dest: path.join(__dirname, DIRECTORIES.uploads),
 });
 
+const letters = "abcdefghijklmnopqrstuvwxyz";
+const randomName = () => {
+  let word = "";
+  for (let i = 0; i < 10; i++) {
+    word += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return word;
+};
+
 app.post(
   "/upload",
   upload.single("file" /* name attribute of <file> element in your form */),
@@ -36,7 +45,7 @@ app.post(
         req.file.originalname
       );
       if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-        const tmpDir = path.join(__dirname, "smb-app");
+        const tmpDir = path.join(__dirname, randomName());
         fs.mkdirSync(tmpDir);
 
         app.use(express.static(tmpDir));
@@ -50,6 +59,8 @@ app.post(
             );
             res.send(urls);
           });
+
+          // DELETE UPLOAD FOLDER!
           setTimeout(() => {
             fs.rm(tmpDir, { recursive: true }, (err) => {
               if (err) {
