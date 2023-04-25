@@ -3,7 +3,8 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const { makeCards } = require("./imageParse.js");
-const { DIRECTORIES, RM_DIR_DELAY } = require("./constants.js");
+const { randomName, deleteDirectory } = require("./helper.js");
+const { DIRECTORIES } = require("./constants.js");
 const app = express();
 
 const port = 8080;
@@ -23,15 +24,6 @@ app.get("/parse", (req, res) => {
 const upload = multer({
   dest: path.join(__dirname, DIRECTORIES.uploads),
 });
-
-const letters = "abcdefghijklmnopqrstuvwxyz";
-const randomName = () => {
-  let word = "";
-  for (let i = 0; i < 10; i++) {
-    word += letters[Math.floor(Math.random() * letters.length)];
-  }
-  return word;
-};
 
 app.post(
   "/upload",
@@ -61,14 +53,7 @@ app.post(
           });
 
           // DELETE UPLOAD FOLDER!
-          setTimeout(() => {
-            fs.rm(tmpDir, { recursive: true }, (err) => {
-              if (err) {
-                throw err;
-              }
-              console.log(`${tmpDir} is deleted!`);
-            });
-          }, RM_DIR_DELAY);
+          deleteDirectory(tmpDir);
         });
       } else {
         fs.unlink(tempPath, (err) => {
