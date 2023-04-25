@@ -17,10 +17,36 @@ const submitImage = async () => {
     .map(
       (url) => /* html */ `
       <div class='player-image'>
-        <img src="${url}" />
+        <img title="${url}" src="${url}" />
       </div>`
     )
     .join("");
+  downloadListener();
+};
+
+const downloadListener = () => {
+  const imgEl = document.querySelectorAll(".player-image img");
+  for (let i in imgEl) {
+    const img = imgEl[i];
+    if (typeof img === "object") {
+      img.addEventListener("click", (event) => {
+        downloadOnClick(event.target);
+      });
+    }
+  }
+};
+
+const downloadOnClick = async (imageObj) => {
+  const image = await fetch(imageObj.src);
+  const imageBlog = await image.blob();
+  const imageURL = URL.createObjectURL(imageBlog);
+
+  const link = document.createElement("a");
+  link.href = imageURL;
+  link.download = imageObj.title;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 imgForm.file.addEventListener("change", (event) => {
