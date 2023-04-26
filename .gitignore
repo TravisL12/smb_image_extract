@@ -1,5 +1,7 @@
 *.png
 node_modules
 uploads
+build
 teams*
 .DS_Store
+deploy.sh
