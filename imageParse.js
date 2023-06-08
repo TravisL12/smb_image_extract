@@ -5,7 +5,7 @@ const Papa = require("papaparse");
 
 const { extras } = require("./other_linup.js");
 const { groupBy, snakeCase, keys } = require("lodash");
-const { DIRECTORIES } = require("./constants.js");
+const { DIRECTORIES, HEIGHT, WIDTH, CARD_SIZES } = require("./constants.js");
 
 const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 
@@ -20,30 +20,32 @@ function parseCsv(file) {
   });
 }
 
+const game = "smb3";
+const { gap, card, firstCard, row1, row2, row3 } = CARD_SIZES[game];
 function getSizes(screenWidth, screenHeight) {
-  const colGap = Math.floor((53 / 3840) * screenWidth);
+  const colGap = Math.floor((gap / WIDTH) * screenWidth);
   const firstRow = [
-    round((410 / 3840) * screenWidth),
-    round((368 / 2160) * screenHeight),
+    round((row1.top / WIDTH) * screenWidth),
+    round((row1.left / HEIGHT) * screenHeight),
   ]; // Left, top
   const secondRow = [
-    round((986 / 3840) * screenWidth),
-    round((902 / 2160) * screenHeight),
+    round((row2.top / WIDTH) * screenWidth),
+    round((row2.left / HEIGHT) * screenHeight),
   ];
   const thirdRow = [
-    round((410 / 3840) * screenWidth),
-    round((1436 / 2160) * screenHeight),
+    round((row3.top / WIDTH) * screenWidth),
+    round((row3.left / HEIGHT) * screenHeight),
   ];
-  const width = round((331 / 3840) * screenWidth);
-  const height = round((490 / 2160) * screenHeight);
+  const width = round((card.top / WIDTH) * screenWidth);
+  const height = round((card.left / HEIGHT) * screenHeight);
 
   const first = {
     row: [
-      round((405 / 3840) * screenWidth),
-      round((356 / 2160) * screenHeight),
+      round((firstCard.top / WIDTH) * screenWidth),
+      round((firstCard.left / HEIGHT) * screenHeight),
     ],
-    width: round((345 / 3840) * screenWidth),
-    height: round((511 / 2160) * screenHeight),
+    width: round((firstCard.width / WIDTH) * screenWidth),
+    height: round((firstCard.height / HEIGHT) * screenHeight),
   };
 
   return { colGap, firstRow, secondRow, thirdRow, width, height, first };

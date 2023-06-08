@@ -37,7 +37,7 @@ app.post(
         req.file.originalname
       );
       if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-        const tmpDir = path.join(__dirname, randomName());
+        const tmpDir = path.join(__dirname, `output/${randomName()}`);
         fs.mkdirSync(tmpDir);
 
         app.use(express.static(tmpDir));
@@ -53,7 +53,7 @@ app.post(
           });
 
           // DELETE UPLOAD FOLDER!
-          deleteDirectory(tmpDir);
+          // deleteDirectory(tmpDir);
         });
       } else {
         fs.unlink(tempPath, (err) => {
