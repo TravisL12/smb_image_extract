@@ -13,20 +13,20 @@ const CARD_SIZES = {
   smb3: {
     playerCount: 20,
     gap: 53,
-    firstCard: { top: 405, left: 356, width: 345, height: 511 },
-    card: { top: 331, left: 490 },
-    row1: { top: 410, left: 368 },
-    row2: { top: 986, left: 902 },
-    row3: { top: 410, left: 1436 },
+    firstCard: { left: 405, top: 356, width: 345, height: 511 },
+    card: { left: 331, top: 490 },
+    row1: { left: 410, top: 368 },
+    row2: { left: 986, top: 902 },
+    row3: { left: 410, top: 1436 },
   },
   smb4: {
     playerCount: 22,
     gap: 70,
-    firstCard: { top: 305, left: 410, width: 380, height: 420 },
-    card: { top: 380, left: 430 }, // viewport size
-    row1: { top: 155, left: 350 }, // shift viewport
-    row2: { top: 600, left: 890 },
-    row3: { top: 155, left: 1420 },
+    firstCard: { left: 145, top: 335, width: 390, height: 440 },
+    card: { left: 380, top: 430 }, // viewport size
+    row1: { left: 155, top: 350 }, // shift viewport
+    row2: { left: 600, top: 890 },
+    row3: { left: 155, top: 1420 },
   },
 };
 

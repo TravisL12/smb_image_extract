@@ -26,24 +26,24 @@ const { gap, card, firstCard, row1, row2, row3, playerCount } =
 function getSizes(screenWidth, screenHeight) {
   const colGap = Math.floor((gap / WIDTH) * screenWidth);
   const firstRow = [
-    round((row1.top / WIDTH) * screenWidth),
-    round((row1.left / HEIGHT) * screenHeight),
+    round((row1.left / WIDTH) * screenWidth),
+    round((row1.top / HEIGHT) * screenHeight),
   ]; // Left, top
   const secondRow = [
-    round((row2.top / WIDTH) * screenWidth),
-    round((row2.left / HEIGHT) * screenHeight),
+    round((row2.left / WIDTH) * screenWidth),
+    round((row2.top / HEIGHT) * screenHeight),
   ];
   const thirdRow = [
-    round((row3.top / WIDTH) * screenWidth),
-    round((row3.left / HEIGHT) * screenHeight),
+    round((row3.left / WIDTH) * screenWidth),
+    round((row3.top / HEIGHT) * screenHeight),
   ];
-  const width = round((card.top / WIDTH) * screenWidth);
-  const height = round((card.left / HEIGHT) * screenHeight);
+  const width = round((card.left / WIDTH) * screenWidth);
+  const height = round((card.top / HEIGHT) * screenHeight);
 
   const first = {
     row: [
-      round((firstCard.top / WIDTH) * screenWidth),
-      round((firstCard.left / HEIGHT) * screenHeight),
+      round((firstCard.left / WIDTH) * screenWidth),
+      round((firstCard.top / HEIGHT) * screenHeight),
     ],
     width: round((firstCard.width / WIDTH) * screenWidth),
     height: round((firstCard.height / HEIGHT) * screenHeight),
@@ -93,12 +93,12 @@ const makeCards = async (file, tmpDir) => {
   // loop player count
   return new Promise((resolve) => {
     for (let i = 0; i <= playerCount; i++) {
-      const imgWidth = width; // i === 0 ? first.width : width;
-      const imgHeight = height; //i === 0 ? first.height : height;
+      const imgWidth = i === 0 ? first.width : width;
+      const imgHeight = i === 0 ? first.height : height;
 
       let left, top, itemLeft;
       if (i < 8) {
-        [left, top] = firstRow; //i === 0 ? first.row : firstRow;
+        [left, top] = i === 0 ? first.row : firstRow;
         itemLeft = left + (imgWidth + colGap) * i;
       } else if (i < 14) {
         [left, top] = secondRow;
