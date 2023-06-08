@@ -20,8 +20,9 @@ function parseCsv(file) {
   });
 }
 
-const game = "smb3";
-const { gap, card, firstCard, row1, row2, row3 } = CARD_SIZES[game];
+const game = "smb4";
+const { gap, card, firstCard, row1, row2, row3, playerCount } =
+  CARD_SIZES[game];
 function getSizes(screenWidth, screenHeight) {
   const colGap = Math.floor((gap / WIDTH) * screenWidth);
   const firstRow = [
@@ -91,20 +92,20 @@ const makeCards = async (file, tmpDir) => {
 
   // loop player count
   return new Promise((resolve) => {
-    for (let i = 0; i <= 20; i++) {
-      const imgWidth = i === 0 ? first.width : width;
-      const imgHeight = i === 0 ? first.height : height;
+    for (let i = 0; i <= playerCount; i++) {
+      const imgWidth = width; // i === 0 ? first.width : width;
+      const imgHeight = height; //i === 0 ? first.height : height;
 
       let left, top, itemLeft;
       if (i < 8) {
-        [left, top] = i === 0 ? first.row : firstRow;
+        [left, top] = firstRow; //i === 0 ? first.row : firstRow;
         itemLeft = left + (imgWidth + colGap) * i;
-      } else if (i < 13) {
+      } else if (i < 14) {
         [left, top] = secondRow;
         itemLeft = left + (imgWidth + colGap) * (i - 8);
       } else {
         [left, top] = thirdRow;
-        itemLeft = left + (imgWidth + colGap) * (i - 13);
+        itemLeft = left + (imgWidth + colGap) * (i - 14);
       }
 
       const playerName = teams[teamName]

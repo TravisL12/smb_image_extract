@@ -53,7 +53,7 @@ app.post(
           });
 
           // DELETE UPLOAD FOLDER!
-          // deleteDirectory(tmpDir);
+          deleteDirectory(tmpDir);
         });
       } else {
         fs.unlink(tempPath, (err) => {
