@@ -123,12 +123,12 @@ const makeCards = async (file, tmpDir) => {
   });
 };
 
-const parseImages = (inputFolder) => {
-  if (!inputFolder) {
-    console.error(`No image directory entered`);
-    return;
-  }
-  const directoryPath = path.join(__dirname, inputFolder);
+const parseImages = (tmpDir) => {
+  // if (!inputFolder) {
+  //   console.error(`No image directory entered`);
+  //   return;
+  // }
+  const directoryPath = path.join(__dirname, "support/smb4");
 
   fs.readdir(directoryPath, async (err, files) => {
     if (err) {
@@ -141,7 +141,7 @@ const parseImages = (inputFolder) => {
 
     // loop through team images
     for (let idx = 0; idx < imageFiles.length; idx++) {
-      await makeCards(imageFiles[idx]);
+      await makeCards({ originalname: imageFiles[idx] }, tmpDir);
     }
   });
 };

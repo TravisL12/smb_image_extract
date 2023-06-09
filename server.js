@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
-const { makeCards } = require("./imageParse.js");
+const { makeCards, parseImages } = require("./imageParse.js");
 const { randomName, deleteDirectory } = require("./helper.js");
 const { DIRECTORIES } = require("./constants.js");
 const app = express();
@@ -15,7 +15,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/parse", (req, res) => {
-  parseImages(req.query.folder);
+  const tmpDir = path.join(__dirname, `output/smb4`);
+  fs.mkdirSync(tmpDir);
+
+  app.use(express.static(tmpDir));
+
+  parseImages(tmpDir);
   res.send({ name: "travis" });
 });
 
