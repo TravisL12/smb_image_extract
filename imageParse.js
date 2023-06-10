@@ -9,7 +9,7 @@ const { DIRECTORIES, HEIGHT, WIDTH, CARD_SIZES } = require("./constants.js");
 
 // uncomment one!
 // const smb4_lineups = require("./smb4_lineups_by_local_id.json");
-// const smb4_lineups = require("./smb4_lineups_by_name.json");
+const smb4_lineups = require("./smb4_lineups_by_name.json");
 
 const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 
@@ -118,7 +118,10 @@ const makeCards = async (file, outputPath) => {
         itemLeft = left + (imgWidth + colGap) * (i - 14);
       }
 
-      const playerName = teams?.[teamName]?.[i] ?? `player-${i}`;
+      // const playerName = teams?.[teamName]?.[i] ?? `player-${i}`;
+      const playerName = teams?.[teamName]
+        ? `${teamName}-${teams?.[teamName]?.[i]}`
+        : `player-${i}`;
 
       sharp(sourceFilePath)
         .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
