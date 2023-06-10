@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/parse", (req, res) => {
-  const tmpDir = path.join(__dirname, `output/smb4`);
+  const tmpDir = path.join(__dirname, DIRECTORIES.uploads, `smb4_output`);
   fs.mkdirSync(tmpDir);
 
   app.use(express.static(tmpDir));

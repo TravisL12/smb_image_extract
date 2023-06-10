@@ -2,10 +2,11 @@ const sharp = require("sharp");
 const fs = require("fs");
 const path = require("path");
 const Papa = require("papaparse");
-
-const { extras } = require("./other_linup.js");
 const { groupBy, snakeCase, keys } = require("lodash");
+
+const { extras } = require("./smb3_lineups/other_linup.js");
 const { DIRECTORIES, HEIGHT, WIDTH, CARD_SIZES } = require("./constants.js");
+const smb4_lineups = require("./smb4_lineups.json");
 
 const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 
@@ -18,6 +19,34 @@ function parseCsv(file) {
   return Papa.parse(content, {
     header: true,
   });
+}
+
+function getSmb3Teams() {
+  // index 0 - 7
+  const lineups = groupBy(parseCsv("./lineups.csv").data, (o) =>
+    snakeCase(o.teamName)
+  );
+
+  // index 13 - 16
+  const rotations = groupBy(parseCsv("./rotations.csv").data, (o) =>
+    snakeCase(o.teamName)
+  );
+
+  const teams = keys(lineups);
+
+  // this is hacky as shit
+  return teams.reduce((acc, team) => {
+    const first = lineups[team]
+      .slice(0, -1) // chop off starting pitcher
+      .map((player) => `${player.firstName} ${player.lastName}`);
+    const second = extras[team].slice(0, 5);
+    const third = rotations[team].map(
+      (player) => `${player.firstName} ${player.lastName}`
+    );
+    const fourth = extras[team].slice(5);
+    acc[team] = [...first, ...second, ...third, ...fourth];
+    return acc;
+  }, {});
 }
 
 const game = "smb4";
@@ -52,44 +81,19 @@ function getSizes(screenWidth, screenHeight) {
   return { colGap, firstRow, secondRow, thirdRow, width, height, first };
 }
 
-function getTeams() {
-  // index 0 - 7
-  const lineups = groupBy(parseCsv("./lineups.csv").data, (o) =>
-    snakeCase(o.teamName)
-  );
+const getSmb4Teams = () => {
+  return smb4_lineups;
+};
 
-  // index 13 - 16
-  const rotations = groupBy(parseCsv("./rotations.csv").data, (o) =>
-    snakeCase(o.teamName)
-  );
-
-  const teams = keys(lineups);
-
-  // this is hacky as shit
-  return teams.reduce((acc, team) => {
-    const first = lineups[team]
-      .slice(0, -1) // chop off starting pitcher
-      .map((player) => `${player.firstName} ${player.lastName}`);
-    const second = extras[team].slice(0, 5);
-    const third = rotations[team].map(
-      (player) => `${player.firstName} ${player.lastName}`
-    );
-    const fourth = extras[team].slice(5);
-    acc[team] = [...first, ...second, ...third, ...fourth];
-    return acc;
-  }, {});
-}
-
-const teams = getTeams();
+const teams = getSmb4Teams();
 const makeCards = async (file, tmpDir) => {
   const fileMetadata = await sharp(
-    path.join(__dirname, DIRECTORIES.uploads, file.originalname)
+    path.join(__dirname, "support/smb4", file.originalname)
   ).metadata();
   const { colGap, firstRow, secondRow, thirdRow, width, height, first } =
     getSizes(+fileMetadata.width, +fileMetadata.height);
 
   const teamName = file.originalname.slice(0, -4);
-
   // loop player count
   return new Promise((resolve) => {
     for (let i = 0; i <= playerCount; i++) {
@@ -108,13 +112,11 @@ const makeCards = async (file, tmpDir) => {
         itemLeft = left + (imgWidth + colGap) * (i - 14);
       }
 
-      const playerName = teams[teamName]
-        ? teams[teamName][i].toLowerCase().replace(/ /gi, "_")
-        : `player-${i}`;
+      const playerName = teams[teamName] ? teams[teamName][i] : `player-${i}`;
 
-      sharp(path.join(__dirname, DIRECTORIES.uploads, file.originalname))
+      sharp(path.join(__dirname, "support/smb4", file.originalname))
         .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
-        .toFile(path.join(tmpDir, `${teamName}-${playerName}.png`), (err) => {
+        .toFile(path.join(tmpDir, `${playerName}.png`), (err) => {
           if (err) console.log(err);
         });
     }
