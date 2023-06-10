@@ -92,7 +92,7 @@ const teams = getSmb4Teams();
 const makeCards = async (file, outputPath) => {
   const sourceFilePath = path.join(
     __dirname,
-    "support/smb4",
+    "support/smb4_teams",
     file.originalname
   );
   const sourceFileMetadata = await sharp(sourceFilePath).metadata();
