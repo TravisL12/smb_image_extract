@@ -49,6 +49,10 @@ function getSmb3Teams() {
   }, {});
 }
 
+const getSmb4Teams = () => {
+  return smb4_lineups;
+};
+
 const game = "smb4";
 const { gap, card, firstCard, row1, row2, row3, playerCount } =
   CARD_SIZES[game];
@@ -81,17 +85,16 @@ function getSizes(screenWidth, screenHeight) {
   return { colGap, firstRow, secondRow, thirdRow, width, height, first };
 }
 
-const getSmb4Teams = () => {
-  return smb4_lineups;
-};
-
 const teams = getSmb4Teams();
-const makeCards = async (file, tmpDir) => {
-  const fileMetadata = await sharp(
-    path.join(__dirname, "support/smb4", file.originalname)
-  ).metadata();
+const makeCards = async (file, outputPath) => {
+  const sourceFilePath = path.join(
+    __dirname,
+    "support/smb4",
+    file.originalname
+  );
+  const sourceFileMetadata = await sharp(sourceFilePath).metadata();
   const { colGap, firstRow, secondRow, thirdRow, width, height, first } =
-    getSizes(+fileMetadata.width, +fileMetadata.height);
+    getSizes(+sourceFileMetadata.width, +sourceFileMetadata.height);
 
   const teamName = file.originalname.slice(0, -4);
   // loop player count
@@ -112,11 +115,11 @@ const makeCards = async (file, tmpDir) => {
         itemLeft = left + (imgWidth + colGap) * (i - 14);
       }
 
-      const playerName = teams[teamName] ? teams[teamName][i] : `player-${i}`;
+      const playerName = teams?.[teamName]?.[i] ?? `player-${i}`;
 
-      sharp(path.join(__dirname, "support/smb4", file.originalname))
+      sharp(sourceFilePath)
         .extract({ left: itemLeft, top, width: imgWidth, height: imgHeight })
-        .toFile(path.join(tmpDir, `${playerName}.png`), (err) => {
+        .toFile(path.join(outputPath, `${playerName}.png`), (err) => {
           if (err) console.log(err);
         });
     }
@@ -125,14 +128,10 @@ const makeCards = async (file, tmpDir) => {
   });
 };
 
-const parseImages = (tmpDir) => {
-  // if (!inputFolder) {
-  //   console.error(`No image directory entered`);
-  //   return;
-  // }
-  const directoryPath = path.join(__dirname, "support/smb4");
+const parseImages = (outputPath) => {
+  const sourceFilesPath = path.join(__dirname, "support/smb4");
 
-  fs.readdir(directoryPath, async (err, files) => {
+  fs.readdir(sourceFilesPath, async (err, files) => {
     if (err) {
       return console.log("Unable to scan directory: " + err);
     }
@@ -143,7 +142,7 @@ const parseImages = (tmpDir) => {
 
     // loop through team images
     for (let idx = 0; idx < imageFiles.length; idx++) {
-      await makeCards({ originalname: imageFiles[idx] }, tmpDir);
+      await makeCards({ originalname: imageFiles[idx] }, outputPath);
     }
   });
 };
