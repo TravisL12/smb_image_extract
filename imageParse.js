@@ -6,7 +6,10 @@ const { groupBy, snakeCase, keys } = require("lodash");
 
 const { extras } = require("./smb3_lineups/other_linup.js");
 const { DIRECTORIES, HEIGHT, WIDTH, CARD_SIZES } = require("./constants.js");
-const smb4_lineups = require("./smb4_lineups.json");
+
+// uncomment one!
+// const smb4_lineups = require("./smb4_lineups_by_local_id.json");
+// const smb4_lineups = require("./smb4_lineups_by_name.json");
 
 const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 
