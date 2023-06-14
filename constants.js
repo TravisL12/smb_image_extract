@@ -12,6 +12,7 @@ const HEIGHT = 2160;
 const CARD_SIZES = {
   smb3: {
     playerCount: 20,
+    rowCount: 13,
     gap: 53,
     firstCard: { left: 405, top: 356, width: 345, height: 511 },
     card: { left: 331, top: 490 },
@@ -21,6 +22,7 @@ const CARD_SIZES = {
   },
   smb4: {
     playerCount: 22,
+    rowCount: 14,
     gap: 70,
     firstCard: { left: 145, top: 335, width: 390, height: 440 },
     card: { left: 380, top: 430 }, // viewport size
