@@ -14,8 +14,8 @@ function round(num) {
 
 const game = "smb4";
 const data = {
-  smb3: { lineup: smb3_lineups, inputDir: "support/smb3_teams" },
-  smb4: { lineup: smb4_lineups, inputDir: "support/smb4_teams" },
+  smb3: { lineup: smb3_lineups, inputDir: "input_files/smb3_teams" },
+  smb4: { lineup: smb4_lineups, inputDir: "input_files/smb4_teams" },
 };
 const teams = data[game].lineup;
 const inputDir = data[game].inputDir;
