@@ -15,7 +15,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/parse", (req, res) => {
-  const outputDir = path.join(__dirname, DIRECTORIES.uploads, `smb4_output`);
+  const outputDir = path.join(
+    __dirname,
+    DIRECTORIES.inputFiles,
+    `smb4_player_imgs`
+  );
   fs.mkdirSync(outputDir);
 
   app.use(express.static(outputDir));
@@ -27,7 +31,7 @@ app.get("/parse", (req, res) => {
 //stackoverflow.com/questions/15772394/how-to-upload-display-and-save-images-using-node-js-and-express
 // you might also want to set some limits: https://github.com/expressjs/multer#limits
 const upload = multer({
-  dest: path.join(__dirname, DIRECTORIES.uploads),
+  dest: path.join(__dirname, DIRECTORIES.inputFiles),
 });
 
 app.post(
@@ -38,7 +42,7 @@ app.post(
       const tempPath = req.file.path;
       const targetPath = path.join(
         __dirname,
-        DIRECTORIES.uploads,
+        DIRECTORIES.inputFiles,
         req.file.originalname
       );
       if (path.extname(req.file.originalname).toLowerCase() === ".png") {

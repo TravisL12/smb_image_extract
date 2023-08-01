@@ -38,7 +38,7 @@ const parseLogoImages = (outputPath) => {
   });
 };
 
-const tmpDir = path.join(__dirname, DIRECTORIES.uploads, `smb4_team_logos`);
+const tmpDir = path.join(__dirname, DIRECTORIES.inputFiles, `smb4_team_logos`);
 fs.mkdirSync(tmpDir);
 parseLogoImages(tmpDir);
 

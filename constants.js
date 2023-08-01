@@ -1,5 +1,5 @@
 const DIRECTORIES = {
-  uploads: "uploads",
+  inputFiles: "inputFiles",
   results: "slice_uploads",
   client: "client",
 };
