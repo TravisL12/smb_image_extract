@@ -3,15 +3,15 @@ const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
 const { makeCards, parseImages } = require("./imageParse.js");
-const { randomName, deleteDirectory } = require("./helper.js");
+const { randomName, deleteDirectory, deleteFile } = require("./helper.js");
 const { DIRECTORIES } = require("./constants.js");
 const app = express();
 
 const port = 8080;
-app.use(express.static(path.join(__dirname, DIRECTORIES.src)));
+app.use(express.static(path.join(__dirname, DIRECTORIES.client)));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, DIRECTORIES.src, "index.html"));
+  res.sendFile(path.join(__dirname, DIRECTORIES.client, "index.html"));
 });
 
 app.get("/parse", (req, res) => {
@@ -57,18 +57,12 @@ app.post(
             res.send(urls);
           });
 
+          deleteFile(targetPath);
           // DELETE UPLOAD FOLDER!
           // deleteDirectory(outputDir);
         });
       } else {
-        fs.unlink(tempPath, (err) => {
-          if (err) return handleError(err, res);
-
-          res
-            .status(403)
-            .contentType("text/plain")
-            .end("Only .png files are allowed!");
-        });
+        deleteFile(targetPath);
       }
     } catch (err) {
       res.status(500).end(err);

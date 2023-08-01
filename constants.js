@@ -1,7 +1,7 @@
 const DIRECTORIES = {
   uploads: "uploads",
   results: "slice_uploads",
-  src: "src",
+  client: "client",
 };
 const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 const RM_DIR_DELAY = 5000;

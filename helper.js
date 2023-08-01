@@ -22,7 +22,20 @@ const deleteDirectory = (tmpDirectory) => {
   }, RM_DIR_DELAY);
 };
 
+const deleteFile = (filePath) => {
+  setTimeout(() => {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      console.log(`${filePath} File deleted`);
+    });
+  }, RM_DIR_DELAY);
+};
+
 module.exports = {
   randomName,
   deleteDirectory,
+  deleteFile,
 };
