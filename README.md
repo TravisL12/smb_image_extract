@@ -9,3 +9,6 @@ Make sure a `./updated` directory als exists for the final images.
 The coordinates in the code are based on 4k image resolution images (3840 × 2160 pixels) of the teams.
 
 Run `yarn install`, and then then run `yarn start` from command line to and visit `localhost:8080`
+
+rename files from list:
+`paste -d' ' <(ls *.png) ../teamslist.txt | xargs -n2 mv`

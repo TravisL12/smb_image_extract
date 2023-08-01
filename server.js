@@ -15,12 +15,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/parse", (req, res) => {
-  const tmpDir = path.join(__dirname, DIRECTORIES.uploads, `smb4_output`);
-  fs.mkdirSync(tmpDir);
+  const outputDir = path.join(__dirname, DIRECTORIES.uploads, `smb4_output`);
+  fs.mkdirSync(outputDir);
 
-  app.use(express.static(tmpDir));
+  app.use(express.static(outputDir));
 
-  parseImages(tmpDir);
+  parseImages(outputDir);
   res.send({ name: "travis" });
 });
 
@@ -42,15 +42,15 @@ app.post(
         req.file.originalname
       );
       if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-        const tmpDir = path.join(__dirname, `output/${randomName()}`);
-        fs.mkdirSync(tmpDir);
+        const outputDir = path.join(__dirname, `output/${randomName()}`);
+        fs.mkdirSync(outputDir);
 
-        app.use(express.static(tmpDir));
+        app.use(express.static(outputDir));
 
         fs.rename(tempPath, targetPath, async (err) => {
           if (err) return handleError(err, res);
-          await makeCards(req.file, tmpDir);
-          fs.readdir(path.join(tmpDir), {}, (_, files) => {
+          await makeCards(req.file, outputDir);
+          fs.readdir(path.join(outputDir), {}, (_, files) => {
             const urls = files.filter(
               (file) => path.extname(file).toLowerCase() === ".png"
             );
@@ -58,7 +58,7 @@ app.post(
           });
 
           // DELETE UPLOAD FOLDER!
-          deleteDirectory(tmpDir);
+          // deleteDirectory(outputDir);
         });
       } else {
         fs.unlink(tempPath, (err) => {
