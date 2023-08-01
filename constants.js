@@ -3,7 +3,7 @@ const DIRECTORIES = {
   results: "slice_uploads",
   src: "src",
 };
-
+const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 const RM_DIR_DELAY = 5000;
 
 const WIDTH = 3840;
@@ -38,4 +38,5 @@ module.exports = {
   WIDTH,
   HEIGHT,
   CARD_SIZES,
+  VALID_IMG_TYPES,
 };

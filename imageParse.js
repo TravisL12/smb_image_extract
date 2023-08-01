@@ -6,11 +6,14 @@ const { snakeCase } = require("lodash");
 const smb3_lineups = require("./smb3_lineups/smb3_complete_lineup.json");
 const smb4_lineups = require("./smb4_complete_lineup.json");
 
-const { HEIGHT, WIDTH, CARD_SIZES } = require("./constants.js");
+const {
+  HEIGHT,
+  WIDTH,
+  CARD_SIZES,
+  VALID_IMG_TYPES,
+} = require("./constants.js");
 
-function round(num) {
-  return Math.round(num);
-}
+const round = (num) => Math.round(num);
 
 const game = "smb4";
 const data = {
@@ -19,8 +22,6 @@ const data = {
 };
 const teams = data[game].lineup;
 const inputDir = data[game].inputDir;
-
-const VALID_IMG_TYPES = [".png", ".jpg", ".JPEG"];
 
 const { gap, card, firstCard, row1, row2, row3, playerCount, rowCount } =
   CARD_SIZES[game];
