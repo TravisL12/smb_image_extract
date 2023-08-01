@@ -24,7 +24,7 @@ function parseCsv(file) {
 }
 
 function outputFile(data) {
-  fs.writeFile("./smb3_complete_lineup.json", JSON.stringify(data), (err) => {
+  fs.writeFile("../smb3_complete_lineup.json", JSON.stringify(data), (err) => {
     err;
   });
 }

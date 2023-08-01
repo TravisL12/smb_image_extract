@@ -1,5 +1,5 @@
 const DIRECTORIES = {
-  inputFiles: "inputFiles",
+  outputFiles: "outputFiles",
   results: "slice_uploads",
   client: "client",
 };
@@ -8,6 +8,9 @@ const RM_DIR_DELAY = 5000;
 
 const WIDTH = 3840;
 const HEIGHT = 2160;
+
+const SMB3 = "smb3";
+const SMB4 = "smb4";
 
 const CARD_SIZES = {
   smb3: {
@@ -33,6 +36,8 @@ const CARD_SIZES = {
 };
 
 module.exports = {
+  SMB3,
+  SMB4,
   DIRECTORIES,
   RM_DIR_DELAY,
   WIDTH,

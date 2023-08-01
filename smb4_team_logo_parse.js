@@ -4,7 +4,7 @@ const path = require("path");
 const { snakeCase } = require("lodash");
 const { DIRECTORIES } = require("./constants");
 
-const inputDir = "input_files/smb4_team_logos";
+const inputDir = "inputFiles/smb4_team_logos";
 
 const makeSmb4TeamLogos = async (file, outputPath) => {
   const sourceFilePath = path.join(__dirname, inputDir, file.originalname);
@@ -38,7 +38,7 @@ const parseLogoImages = (outputPath) => {
   });
 };
 
-const tmpDir = path.join(__dirname, DIRECTORIES.inputFiles, `smb4_team_logos`);
+const tmpDir = path.join(__dirname, DIRECTORIES.outputFiles, `smb4_team_logos`);
 fs.mkdirSync(tmpDir);
 parseLogoImages(tmpDir);
 

@@ -1,5 +1,7 @@
 const fs = require("fs");
 const { RM_DIR_DELAY } = require("./constants.js");
+const smb3_lineups = require("./smb_lineups/smb3_complete_lineup.json");
+const smb4_lineups = require("./smb_lineups/smb4_complete_lineup.json");
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 const randomName = () => {
@@ -34,8 +36,17 @@ const deleteFile = (filePath) => {
   }, RM_DIR_DELAY);
 };
 
+const gameData = {
+  smb3: { lineup: smb3_lineups, inputDir: "inputFiles/smb3_teams" },
+  smb4: { lineup: smb4_lineups, inputDir: "inputFiles/smb4_teams" },
+};
+
+const round = (num) => Math.round(num);
+
 module.exports = {
   randomName,
   deleteDirectory,
   deleteFile,
+  round,
+  gameData,
 };

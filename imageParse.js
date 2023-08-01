@@ -1,37 +1,20 @@
 const sharp = require("sharp");
-const fs = require("fs");
 const path = require("path");
 const { snakeCase } = require("lodash");
 
-const smb3_lineups = require("./smb3_lineups/smb3_complete_lineup.json");
-const smb4_lineups = require("./smb4_complete_lineup.json");
+const { HEIGHT, WIDTH, CARD_SIZES, SMB4 } = require("./constants.js");
+const { round, gameData } = require("./helper");
 
-const {
-  HEIGHT,
-  WIDTH,
-  CARD_SIZES,
-  VALID_IMG_TYPES,
-} = require("./constants.js");
-
-const round = (num) => Math.round(num);
-
-const game = "smb4";
-const data = {
-  smb3: { lineup: smb3_lineups, inputDir: "input_files/smb3_teams" },
-  smb4: { lineup: smb4_lineups, inputDir: "input_files/smb4_teams" },
-};
-const teams = data[game].lineup;
-const inputDir = data[game].inputDir;
-
-const { gap, card, firstCard, row1, row2, row3, playerCount, rowCount } =
-  CARD_SIZES[game];
+const game = SMB4;
 
 function getSizes(screenWidth, screenHeight) {
+  const { gap, card, firstCard, row1, row2, row3 } = CARD_SIZES[game];
+
   const colGap = Math.floor((gap / WIDTH) * screenWidth);
   const firstRow = [
     round((row1.left / WIDTH) * screenWidth),
     round((row1.top / HEIGHT) * screenHeight),
-  ]; // Left, top
+  ];
   const secondRow = [
     round((row2.left / WIDTH) * screenWidth),
     round((row2.top / HEIGHT) * screenHeight),
@@ -56,8 +39,12 @@ function getSizes(screenWidth, screenHeight) {
 }
 
 const makeCards = async (file, outputPath) => {
+  const { playerCount, rowCount } = CARD_SIZES[game];
+  const { lineup: teams, inputDir } = gameData[game];
+
   const sourceFilePath = path.join(__dirname, inputDir, file.originalname);
   const sourceFileMetadata = await sharp(sourceFilePath).metadata();
+
   const { colGap, firstRow, secondRow, thirdRow, width, height, first } =
     getSizes(+sourceFileMetadata.width, +sourceFileMetadata.height);
 
@@ -99,26 +86,6 @@ const makeCards = async (file, outputPath) => {
   });
 };
 
-const parseImages = (outputPath) => {
-  const sourceFilesPath = path.join(__dirname, inputDir);
-
-  fs.readdir(sourceFilesPath, async (err, files) => {
-    if (err) {
-      return console.log("Unable to scan directory: " + err);
-    }
-
-    const imageFiles = files.filter((el) =>
-      VALID_IMG_TYPES.includes(path.extname(el))
-    );
-
-    // loop through team images
-    for (let idx = 0; idx < imageFiles.length; idx++) {
-      await makeCards({ originalname: imageFiles[idx] }, outputPath);
-    }
-  });
-};
-
 module.exports = {
   makeCards,
-  parseImages,
 };
